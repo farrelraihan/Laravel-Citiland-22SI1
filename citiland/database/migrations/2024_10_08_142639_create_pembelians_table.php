@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('pembelians', function (Blueprint $table) {
             $table->id();
-            $table->string('KodeBahanBaku');
-            $table->string('NamaBahanBaku');
-            $table->string('JenisBahanBaku');
-            $table->string('JumlahPembelian');
-            $table->string('UnitBahanBaku');
-            $table->string('NamaSupplier');
-            $table->string('NomorNota');
-            $table->string('HargaBahanBaku');
+            $table->string('KodeBahanBaku', 10);
+            $table->string('NamaBahanBaku', 100);
+            $table->string('JenisBahanBaku', 5);
+            $table->string('JumlahPembelian', 20);
+            $table->string('UnitBahanBaku', 5);
+            $table->string('NamaSupplier', 40);
+            $table->string('NomorNota', 30);
+            $table->string('HargaBahanBaku', 25);
             $table->dateTime('TanggalPembelian');
             
         });
