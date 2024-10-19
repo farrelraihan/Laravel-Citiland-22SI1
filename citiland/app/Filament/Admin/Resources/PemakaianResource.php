@@ -33,40 +33,31 @@ class PemakaianResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('KodeBahanBaku')
-                    ->label('Kode Bahan Baku')
+                Forms\Components\TextInput::make('KodePemakaian')
+                    ->label('Kode Pemakaian')
                     ->required()
-                    ->placeholder('Kode Bahan Baku'),
+                    ->placeholder('Kode Pemakaian'),
+             
 
-                Forms\Components\TextInput::make('NamaBahanBaku')
-                    ->label('Nama Bahan Baku')
+                Forms\Components\TextInput::make('KodeJenisBahanBaku')
+                    ->label('Kode Jenis Bahan Baku')
                     ->required()
-                    ->placeholder('Nama Bahan Baku'),
-
-                Forms\Components\TextInput::make('JenisBahanBaku')
-                    ->label('Jenis Bahan Baku')
-                    ->required()
-                    ->placeholder('Jenis Bahan Baku'),
-
-                Forms\Components\TextInput::make('UnitBahanBaku')
-                    ->label('Unit Bahan Baku')
-                    ->required()
-                    ->placeholder('Unit Bahan Baku'),
+                    ->placeholder('Kode Jenis Bahan Baku'),
 
                 Forms\Components\TextInput::make('JumlahPemakaian')
                     ->label('Jumlah Pemakaian')
                     ->required()
                     ->placeholder('Jumlah Pemakaian'),
 
-                Forms\Components\TextInput::make('SaldoAwalBulan')
-                    ->label('Saldo Awal Bulan')
+                Forms\Components\TextInput::make('UnitBahanBaku')
+                    ->label('Unit Bahan Baku')
                     ->required()
-                    ->placeholder('Saldo Awal Bulan'),
+                    ->placeholder('Unit Bahan Baku'),
 
-                Forms\Components\TextInput::make('SaldoAkhirBulan')
-                    ->label('Saldo Akhir Bulan')
+                Forms\Components\DateTimePicker::make('TanggalPemakaian')
+                    ->label('Tanggal Pemakaian')
                     ->required()
-                    ->placeholder('Saldo Akhir Bulan'),
+                    ->placeholder('Tanggal Pemakaian'),
             ]);
     }
 

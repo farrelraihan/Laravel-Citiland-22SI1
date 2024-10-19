@@ -8,13 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Pemakaian extends Model
 {
     use HasFactory;
+
+
     protected $fillable = [
-        'KodeBahanBaku',
-        'NamaBahanBaku',
-        'JenisBahanBaku',
-        'UnitBahanBaku',
+        'KodePemakaian',
+        'KodeJenisBahanBaku',
         'JumlahPemakaian',
-        'SaldoAwalBulan',
-        'SaldoAkhirBulan',
+        'UnitBahanBaku',
+        'TanggalPemakaian',
     ];
+    public $timestamps = false;
 }

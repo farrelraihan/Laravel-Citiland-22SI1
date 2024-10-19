@@ -33,15 +33,16 @@ class PembelianResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('KodeBahanBaku')
-                    ->label('Kode Bahan Baku')
+                Forms\Components\TextInput::make('KodePembelian')
+                    ->label('Kode Pembelian')
                     ->required()
-                    ->placeholder('Kode Bahan Baku'),
+                    ->placeholder('Kode Pembelian'),
+                
 
-                Forms\Components\TextInput::make('NamaBahanBaku')
-                    ->label('Nama Bahan Baku')
+                Forms\Components\TextInput::make('KodeJenisBahanBaku')
+                    ->label('Kode Jenis Bahan Baku')
                     ->required()
-                    ->placeholder('Nama Bahan Baku'),
+                    ->placeholder('Kode Jenis Bahan Baku'),
 
                 Forms\Components\TextInput::make('JenisBahanBaku')
                     ->label('Jenis Bahan Baku')
@@ -58,15 +59,10 @@ class PembelianResource extends Resource
                     ->required()
                     ->placeholder('Unit Bahan Baku'),
 
-                Forms\Components\TextInput::make('NamaSupplier')
-                    ->label('Nama Supplier')
+                Forms\Components\TextInput::make('KodeSupplier')
+                    ->label('Kode Supplier')
                     ->required()
-                    ->placeholder('Nama Supplier'),
-
-                Forms\Components\TextInput::make('NomorNota')
-                    ->label('Nomor Nota')
-                    ->required()
-                    ->placeholder('Nomor Nota'),
+                    ->placeholder('Kode Supplier'),
 
                 Forms\Components\TextInput::make('HargaBahanBaku')
                     ->label('Harga Bahan Baku')
@@ -84,18 +80,13 @@ class PembelianResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('KodeBahanBaku')
-                    ->label('Kode Bahan Baku')
+                Tables\Columns\TextColumn::make('KodePembelian')
+                    ->label('Kode Pembelian')
                     ->searchable()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('NamaBahanBaku')
-                    ->label('Nama Bahan Baku')
-                    ->searchable()
-                    ->sortable(),
-
-                Tables\Columns\TextColumn::make('JenisBahanBaku')
-                    ->label('Jenis Bahan Baku')
+                Tables\Columns\TextColumn::make('KodeJenisBahanBaku')
+                    ->label('Kode Jenis Bahan Baku')
                     ->searchable()
                     ->sortable(),
 
@@ -106,14 +97,10 @@ class PembelianResource extends Resource
                 Tables\Columns\TextColumn::make('UnitBahanBaku')
                     ->label('Unit Bahan Baku'),
 
-                Tables\Columns\TextColumn::make('NamaSupplier')
-                    ->label('Nama Supplier')
+                Tables\Columns\TextColumn::make('KodeSupplier')
+                    ->label('Kode Supplier')
                     ->searchable()
                     ->sortable(),
-
-                Tables\Columns\TextColumn::make('NomorNota')
-                    ->label('Nomor Nota')
-                    ->searchable(),
 
                 Tables\Columns\TextColumn::make('HargaBahanBaku')
                     ->label('Harga Bahan Baku')

@@ -33,20 +33,20 @@ class StokBahanBakuResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('Kodebahanbaku')
-                    ->label('Kode Bahan Baku')
+                Forms\Components\TextInput::make('KodeStokBahanBaku')
+                    ->label('Kode Stok Bahan Baku')
                     ->required()
-                    ->placeholder('Kode Bahan Baku'),
+                    ->placeholder('Kode Stok Bahan Baku'),
+
+                    Forms\Components\TextInput::make('KodeJenisBahanBaku')
+                    ->label('Kode Jenis Bahan Baku')
+                    ->required()
+                    ->placeholder('Kode Jenis Bahan Baku'),
 
                 Forms\Components\TextInput::make('NamaBahanBaku')
                     ->label('Nama Bahan Baku')
                     ->required()
                     ->placeholder('Nama Bahan Baku'),
-
-                Forms\Components\TextInput::make('JenisBahanBaku')
-                    ->label('Jenis Bahan Baku')
-                    ->required()
-                    ->placeholder('Jenis Bahan Baku'),
 
                 Forms\Components\TextInput::make('UnitBahanBaku')
                     ->label('Unit Bahan Baku')
@@ -89,18 +89,18 @@ class StokBahanBakuResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('Kodebahanbaku')
-                    ->label('Kode Bahan Baku')
+                Tables\Columns\TextColumn::make('KodeStokBahanBaku')
+                    ->label('Kode Stok Bahan Baku')
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('KodeJenisBahanBaku')
+                    ->label('Kode Jenis Bahan Baku')
                     ->searchable()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('NamaBahanBaku')
                     ->label('Nama Bahan Baku')
-                    ->searchable()
-                    ->sortable(),
-
-                Tables\Columns\TextColumn::make('JenisBahanBaku')
-                    ->label('Jenis Bahan Baku')
                     ->searchable()
                     ->sortable(),
 

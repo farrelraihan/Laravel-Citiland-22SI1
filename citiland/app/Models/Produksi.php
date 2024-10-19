@@ -9,6 +9,7 @@ class Produksi extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'KodeProduksi',
         'KodeBarang',
         'NamaBarang',
         

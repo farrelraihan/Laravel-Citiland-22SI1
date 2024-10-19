@@ -11,13 +11,11 @@ class pembelian extends Model
     use HasFactory;
     public $timestamps = false;
     protected $fillable = [
-        'KodeBahanBaku',
-        'NamaBahanBaku',
-        'JenisBahanBaku',
+        'KodePembelian',
+        'KodeJenisBahanBaku',
         'JumlahPembelian',
         'UnitBahanBaku',
-        'NamaSupplier',
-        'NomorNota',
+        'KodeSupplier',
         'HargaBahanBaku',
         'TanggalPembelian',
     ];

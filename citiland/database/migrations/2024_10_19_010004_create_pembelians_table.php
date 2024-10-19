@@ -12,16 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pembelians', function (Blueprint $table) {
-            $table->id();
-            $table->string('KodeBahanBaku', 10);
-            $table->string('NamaBahanBaku', 100);
-            $table->string('JenisBahanBaku', 5);
+            $table->char('KodePembelian', 10)->primary();
+            $table->char('KodeJenisBahanBaku', 10); 
             $table->string('JumlahPembelian', 20);
             $table->string('UnitBahanBaku', 5);
-            $table->string('NamaSupplier', 40);
-            $table->string('NomorNota', 30);
+            $table->char('kode_supplier'); //ambil dari tabel supplier
             $table->string('HargaBahanBaku', 25);
             $table->dateTime('TanggalPembelian');
+
+
+            $table->foreign('KodeJenisBahanBaku')->references('KodeJenisBahanBaku')->on('jenis');
+            $table->foreign('kode_supplier')->references('kode_supplier')->on('suppliers');
+
             
         });
     }

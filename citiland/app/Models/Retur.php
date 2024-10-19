@@ -10,13 +10,11 @@ class Retur extends Model
     use HasFactory;
     public $timestamps = false;
     protected $fillable = [
-        'KodeBahanBaku',
-        'NamaBahanBaku',
-        'JenisBahanBaku',
-        'NomorNota',
-        'NamaSupplier',
-        'JumlahRetur',
-        'HargaBahanBaku',
+        'KodeRetur',
+        'KodeJenisBahanBaku',
+        'KodeSupplier',
+        'JumlahBahanBaku',
+        'HargaRetur',
         'TanggalRetur',
     ];  
 }

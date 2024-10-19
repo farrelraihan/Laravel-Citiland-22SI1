@@ -13,6 +13,8 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
+use function Laravel\Prompts\form;
+
 class ProduksiResource extends Resource
 {
     protected static ?string $model = Produksi::class;
@@ -33,6 +35,11 @@ class ProduksiResource extends Resource
     {
         return $form
             ->schema([
+                forms\Components\TextInput::make('KodeProduksi')
+                    ->label('Kode Produksi')
+                    ->required()
+                    ->placeholder('Kode Produksi'),
+
                 Forms\Components\TextInput::make('KodeBarang')
                     ->label('Kode Barang')
                     ->required()
@@ -51,6 +58,10 @@ class ProduksiResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('KodeProduksi')
+                    ->searchable()
+                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('KodeBarang')
     
                     ->searchable()

@@ -33,6 +33,11 @@ class AdminResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\TextInput::make('kodeAdmin')
+                    ->label('Kode Admin')
+                    ->required()
+                    ->placeholder('Kode Admin'),
+
                 Forms\Components\TextInput::make('Nama')
                     ->label('Name')
                     ->required()
@@ -56,8 +61,11 @@ class AdminResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('kodeAdmin')
+                    ->searchable()
+                    ->sortable(),
+                    
                 Tables\Columns\TextColumn::make('Nama')
-    
                     ->searchable()
                     ->sortable(),
 

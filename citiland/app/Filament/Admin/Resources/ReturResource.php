@@ -33,40 +33,35 @@ class ReturResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('KodeBahanBaku')
-                    ->label('Kode Bahan Baku')
+                Forms\Components\TextInput::make('KodeRetur')
+                    ->label('Kode Retur')
                     ->required()
-                    ->placeholder('Kode Bahan Baku'),
+                    ->placeholder('Kode Retur'),
 
-                Forms\Components\TextInput::make('NamaBahanBaku')
-                    ->label('Nama Bahan Baku')
+                Forms\Components\TextInput::make('KodeJenisBahanBaku')
+                    ->label('Kode Jenis Bahan Baku')
                     ->required()
-                    ->placeholder('Nama Bahan Baku'),
+                    ->placeholder('Kode Jenis Bahan Baku'),
+               
+                Forms\Components\TextInput::make('KodeSupplier')
+                    ->label('Kode Supplier')
+                    ->required()
+                    ->placeholder('Kode Supplier'),
 
-                Forms\Components\TextInput::make('JenisBahanBaku')
-                    ->label('Jenis Bahan Baku')
+                Forms\Components\TextInput::make('JumlahBahanBaku')
+                    ->label('Kode Jumlah Bahan Baku')
                     ->required()
-                    ->placeholder('Jenis Bahan Baku'),
+                    ->placeholder('Kode Jumlah Bahan Baku'),
 
-                Forms\Components\TextInput::make('NomorNota')
-                    ->label('Nomor Nota')
+                Forms\Components\TextInput::make('HargaRetur')
+                    ->label('Harga Retur ')
                     ->required()
-                    ->placeholder('Nomor Nota'),
+                    ->placeholder('Harga Retur'),
 
-                Forms\Components\TextInput::make('NamaSupplier')
-                    ->label('Nama Supplier')
+                Forms\Components\TextInput::make('satuanBahanBaku')
+                    ->label('Satuan Bahan Baku')
                     ->required()
-                    ->placeholder('Nama Supplier'),
-
-                Forms\Components\TextInput::make('JumlahRetur')
-                    ->label('Jumlah Retur')
-                    ->required()
-                    ->placeholder('Jumlah Retur'),
-
-                Forms\Components\TextInput::make('HargaBahanBaku')
-                    ->label('Harga Bahan Baku')
-                    ->required()
-                    ->placeholder('Harga Bahan Baku'),
+                    ->placeholder('Kode Satuan Bahan Baku'),
 
                 Forms\Components\DateTimePicker::make('TanggalRetur')
                     ->label('Tanggal Retur')
@@ -79,38 +74,34 @@ class ReturResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('KodeBahanBaku')
-                    ->label('Kode Bahan Baku')
+
+                Tables\Columns\TextColumn::make('KodeRetur')
+                    ->label('Kode Retur ')
                     ->searchable()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('NamaBahanBaku')
-                    ->label('Nama Bahan Baku')
+                Tables\Columns\TextColumn::make('KodeJenisBahanBaku')
+                    ->label('Kode Jenis Bahan Baku')
                     ->searchable()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('JenisBahanBaku')
-                    ->label('Jenis Bahan Baku')
+                Tables\Columns\TextColumn::make('KodeSupplier')
+                    ->label('Kode Supplier')
                     ->searchable()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('NomorNota')
-                    ->label('Nomor Nota')
+                Tables\Columns\TextColumn::make('JumlahBahanBaku')
+                    ->label('Jumlah Bahan Baku')
                     ->searchable()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('NamaSupplier')
-                    ->label('Nama Supplier')
+                Tables\Columns\TextColumn::make('HargaRetur')
+                    ->label('Harga Retur')
                     ->searchable()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('JumlahRetur')
-                    ->label('Jumlah Retur')
-                    ->searchable()
-                    ->sortable(),
-
-                Tables\Columns\TextColumn::make('HargaBahanBaku')
-                    ->label('Harga Bahan Baku')
+                Tables\Columns\TextColumn::make('satuanBahanBaku')
+                    ->label('Satuan Bahan Baku')
                     ->searchable()
                     ->sortable(),
 
