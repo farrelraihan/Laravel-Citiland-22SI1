@@ -14,4 +14,6 @@ class Admin extends Model
         'NoHP',
         'Email',
     ];
+
+    protected $primaryKey = 'kodeAdmin';
 }
