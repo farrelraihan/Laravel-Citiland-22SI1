@@ -36,14 +36,6 @@ class AdminResource extends Resource
                 Forms\Components\TextInput::make('kodeAdmin')
                     ->label('Kode Admin')
                     ->required()
-                    ->default(function () {
-                        // Generate a unique kodeAdmin (e.g., 'ADM00001', 'ADM00002', etc.)
-                        $latestAdmin = Admin::latest('kodeAdmin')->first();
-                        $latestKodeAdmin = $latestAdmin ? $latestAdmin->kodeAdmin : 'ADM00000';
-                        $newKodeAdmin = 'ADM' . str_pad(intval(substr($latestKodeAdmin, 3)) + 1, 5, '0', STR_PAD_LEFT);
-                        return $newKodeAdmin; //balikin aja lg ke manual input. error smw
-                    })
-                  
                     ->placeholder('Kode Admin'),
 
 
@@ -115,16 +107,5 @@ class AdminResource extends Resource
         ];
     }
 
-    static function create(array $data): Admin 
-    {
-        $admin = new Admin();
-        $latestAdmin = Admin::latest('kodeAdmin')->first();
-        $latestKodeAdmin = $latestAdmin ? $latestAdmin->kodeAdmin : 'ADM00000';
-        $newKodeAdmin = 'ADM' . str_pad(intval(substr($latestKodeAdmin, 3)) + 1, 5, '0', STR_PAD_LEFT);
-        $data['kodeAdmin'] = $newKodeAdmin;
-        $admin->create($data);
-
-        return $admin;
-    } //hapus all function bangsat ini
 }
 

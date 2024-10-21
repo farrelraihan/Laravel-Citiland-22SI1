@@ -9,7 +9,7 @@ class StokBahanBaku extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'KodeStokBahanBaku',
+        'KodebahanBaku',
         'KodeJenisBahanBaku',
         'NamaBahanBaku',
         'UnitBahanBaku',

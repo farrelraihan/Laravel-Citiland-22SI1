@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('stok_bahan_bakus', function (Blueprint $table) {
             
-            $table->char('Kodebahanbaku', 10)->primary();
+            $table->char('KodebahanBaku', 10)->primary();
+            $table->char('KodeJenisBahanBaku', 10);
             $table->char('NamaBahanBaku', 100);
-            $table->char('JenisBahanBaku', 5);
             $table->char('UnitBahanBaku', 5);
             $table->char('JumlahBBMasuk', 10);
             $table->char('JumlahBBKeluar', 10);
@@ -24,6 +24,8 @@ return new class extends Migration
             $table->char('JumlahBahanBaku', 10);
             $table->char('PemakaianRataRata', 25);
             $table->timestamps();
+
+            $table->foreign('KodeJenisBahanBaku')->references('KodeJenisBahanBaku')->on('jenis');
         });
     }
 

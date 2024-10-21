@@ -33,7 +33,7 @@ class StokBahanBakuResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('KodeStokBahanBaku')
+                Forms\Components\TextInput::make('KodebahanBaku')
                     ->label('Kode Stok Bahan Baku')
                     ->required()
                     ->placeholder('Kode Stok Bahan Baku'),
@@ -89,7 +89,7 @@ class StokBahanBakuResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('KodeStokBahanBaku')
+                Tables\Columns\TextColumn::make('KodebahanBaku')
                     ->label('Kode Stok Bahan Baku')
                     ->searchable()
                     ->sortable(),
