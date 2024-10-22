@@ -43,15 +43,15 @@ class ReturResource extends Resource
                     ->required()
                     ->placeholder('Kode Jenis Bahan Baku'),
                
-                Forms\Components\TextInput::make('KodeSupplier')
+                Forms\Components\TextInput::make('kode_supplier')
                     ->label('Kode Supplier')
                     ->required()
                     ->placeholder('Kode Supplier'),
 
                 Forms\Components\TextInput::make('JumlahBahanBaku')
-                    ->label('Kode Jumlah Bahan Baku')
+                    ->label('Jumlah Bahan Baku')
                     ->required()
-                    ->placeholder('Kode Jumlah Bahan Baku'),
+                    ->placeholder('Jumlah Bahan Baku'),
 
                 Forms\Components\TextInput::make('HargaRetur')
                     ->label('Harga Retur ')
@@ -61,7 +61,7 @@ class ReturResource extends Resource
                 Forms\Components\TextInput::make('satuanBahanBaku')
                     ->label('Satuan Bahan Baku')
                     ->required()
-                    ->placeholder('Kode Satuan Bahan Baku'),
+                    ->placeholder('Satuan Bahan Baku'),
 
                 Forms\Components\DateTimePicker::make('TanggalRetur')
                     ->label('Tanggal Retur')
@@ -85,7 +85,7 @@ class ReturResource extends Resource
                     ->searchable()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('KodeSupplier')
+                Tables\Columns\TextColumn::make('kode_supplier')
                     ->label('Kode Supplier')
                     ->searchable()
                     ->sortable(),

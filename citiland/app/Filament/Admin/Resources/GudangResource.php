@@ -19,6 +19,16 @@ class GudangResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getModelLabel(): string
+    {
+        return 'Gudang';
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return 'Gudang';
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -45,12 +55,11 @@ class GudangResource extends Resource
             ->columns([
 
                 Tables\Columns\TextColumn::make('kodeGudang')
-                    ->primary()
                     ->searchable()
                     ->label('Kode Gudang'),
                     
                 Tables\Columns\TextColumn::make('nama_Gudang')
-                    ->primary()
+          
                     ->searchable()
                     ->label('Nama Gudang'),
                 Tables\Columns\TextColumn::make('noHP_Gudang')

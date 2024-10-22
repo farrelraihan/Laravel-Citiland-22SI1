@@ -12,6 +12,9 @@ class Supplier extends Model
         'kode_supplier',
         'nama_supplier',
         'noHP_supplier',
-        'email_supplier',
+        'alamat_supplier',
     ];
+
+    protected $primaryKey = 'kode_supplier';
+    public $incrementing = false;
 }

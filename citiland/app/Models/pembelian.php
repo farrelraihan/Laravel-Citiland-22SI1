@@ -15,8 +15,11 @@ class pembelian extends Model
         'KodeJenisBahanBaku',
         'JumlahPembelian',
         'UnitBahanBaku',
-        'KodeSupplier',
+        'kode_supplier',
         'HargaBahanBaku',
         'TanggalPembelian',
     ];
+
+    protected $primaryKey = 'KodePembelian';
+    public $incrementing = false;
 }

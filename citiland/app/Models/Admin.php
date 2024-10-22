@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Admin extends Model
 {
     use HasFactory;
+
+
     protected $fillable = [
         'kodeAdmin',
         'Nama',
@@ -16,4 +18,8 @@ class Admin extends Model
     ];
 
     protected $primaryKey = 'kodeAdmin';
+
+    public $incrementing = false;
+
+
 }

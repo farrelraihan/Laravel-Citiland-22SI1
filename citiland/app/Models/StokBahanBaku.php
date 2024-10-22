@@ -20,4 +20,8 @@ class StokBahanBaku extends Model
         'JumlahBahanBaku',
         'PemakaianRataRata',
     ];
+
+    protected $primaryKey = 'KodebahanBaku';
+
+    public $incrementing = false;
 }

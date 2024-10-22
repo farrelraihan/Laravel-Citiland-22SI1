@@ -65,24 +65,14 @@ class PemakaianResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('KodeBahanBaku')
+                Tables\Columns\TextColumn::make('KodePemakaian')
             
-                                    ->label('Kode Bahan Baku')
+                                    ->label('Kode Pemakaian')
                                     ->searchable()
                                     ->sortable(),
                 
-                                Tables\Columns\TextColumn::make('NamaBahanBaku')
-                                    ->label('Nama Bahan Baku')
-                                    ->searchable()
-                                    ->sortable(),
-                
-                                Tables\Columns\TextColumn::make('JenisBahanBaku')
-                                    ->label('Jenis Bahan Baku')
-                                    ->searchable()
-                                    ->sortable(),
-                
-                                Tables\Columns\TextColumn::make('UnitBahanBaku')
-                                    ->label('Unit Bahan Baku')
+                                Tables\Columns\TextColumn::make('KodeJenisBahanBaku')
+                                    ->label('Kode Jenis Bahan Baku')
                                     ->searchable()
                                     ->sortable(),
                 
@@ -91,15 +81,17 @@ class PemakaianResource extends Resource
                                     ->searchable()
                                     ->sortable(),
                 
-                                Tables\Columns\TextColumn::make('SaldoAwalBulan')
-                                    ->label('Saldo Awal Bulan')
+                                Tables\Columns\TextColumn::make('UnitBahanBaku')
+                                    ->label('Unit Bahan Baku')
                                     ->searchable()
                                     ->sortable(),
                 
-                                Tables\Columns\TextColumn::make('SaldoAkhirBulan')
-                                    ->label('Saldo Akhir Bulan')
+                                Tables\Columns\TextColumn::make('TanggalPemakaian')
+                                    ->label('Tanggal Pemakaian')
                                     ->searchable()
                                     ->sortable(),
+                
+                 
             ])
             ->filters([
                 //

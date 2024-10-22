@@ -12,9 +12,13 @@ class Retur extends Model
     protected $fillable = [
         'KodeRetur',
         'KodeJenisBahanBaku',
-        'KodeSupplier',
+        'kode_supplier',
         'JumlahBahanBaku',
         'HargaRetur',
+        'satuanBahanBaku',
         'TanggalRetur',
     ];  
+
+    protected $primaryKey = 'KodeRetur';
+    public $incrementing = false;
 }

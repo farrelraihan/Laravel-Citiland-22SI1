@@ -17,5 +17,8 @@ class Pemakaian extends Model
         'UnitBahanBaku',
         'TanggalPemakaian',
     ];
+
+    protected $primaryKey = 'KodePemakaian';
+    public $incrementing = false;
     public $timestamps = false;
 }

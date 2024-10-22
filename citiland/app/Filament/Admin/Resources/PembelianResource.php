@@ -44,11 +44,6 @@ class PembelianResource extends Resource
                     ->required()
                     ->placeholder('Kode Jenis Bahan Baku'),
 
-                Forms\Components\TextInput::make('JenisBahanBaku')
-                    ->label('Jenis Bahan Baku')
-                    ->required()
-                    ->placeholder('Jenis Bahan Baku'),
-
                 Forms\Components\TextInput::make('JumlahPembelian')
                     ->label('Jumlah Pembelian')
                     ->required()
@@ -59,12 +54,12 @@ class PembelianResource extends Resource
                     ->required()
                     ->placeholder('Unit Bahan Baku'),
 
-                Forms\Components\TextInput::make('KodeSupplier')
+                Forms\Components\TextInput::make('kode_supplier')
                     ->label('Kode Supplier')
                     ->required()
                     ->placeholder('Kode Supplier'),
 
-                Forms\Components\TextInput::make('HargaBahanBaku')
+                Forms\Components\TextInput::make('HargaBahanbaku')
                     ->label('Harga Bahan Baku')
                     ->required()
                     ->placeholder('Harga Bahan Baku'),
@@ -97,7 +92,7 @@ class PembelianResource extends Resource
                 Tables\Columns\TextColumn::make('UnitBahanBaku')
                     ->label('Unit Bahan Baku'),
 
-                Tables\Columns\TextColumn::make('KodeSupplier')
+                Tables\Columns\TextColumn::make('kode_supplier')
                     ->label('Kode Supplier')
                     ->searchable()
                     ->sortable(),

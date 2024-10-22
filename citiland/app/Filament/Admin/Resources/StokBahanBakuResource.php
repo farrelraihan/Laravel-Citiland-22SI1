@@ -21,12 +21,12 @@ class StokBahanBakuResource extends Resource
 
     public static function getModelLabel(): string
     {
-        return 'Stok Bahan Baku';
+        return 'Stok';
     }
 
     public static function getPluralModelLabel(): string
     {
-        return 'Stok Bahan Baku';
+        return 'Stok';
     }
 
     public static function form(Form $form): Form

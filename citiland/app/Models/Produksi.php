@@ -14,4 +14,7 @@ class Produksi extends Model
         'NamaBarang',
         
     ];
+
+    protected $primaryKey = 'KodeProduksi';
+    public $incrementing = false;
 }

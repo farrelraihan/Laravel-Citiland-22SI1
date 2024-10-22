@@ -9,10 +9,14 @@ class Gudang extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'kode_Gudang',
+        'kodeGudang',
         'nama_Gudang',
         'noHP_Gudang',
         'email_Gudang',
     ];
+
+    protected $primaryKey = 'kodeGudang';
+
+    public $incrementing = false;
 
 }

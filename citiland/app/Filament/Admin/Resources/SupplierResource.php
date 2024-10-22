@@ -19,11 +19,21 @@ class SupplierResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getModelLabel(): string
+    {
+        return 'Supplier';
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return 'Supplier';
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('kode_Supplier')
+                Forms\Components\TextInput::make('kode_supplier')
                     ->label('Kode Supplier')
                     ->required(),
 
@@ -33,8 +43,8 @@ class SupplierResource extends Resource
                 Forms\Components\TextInput::make('noHP_supplier')
                     ->label('No HP Supplier')
                     ->required(),
-                Forms\Components\TextInput::make('email_supplier')
-                    ->label('Email Supplier')
+                Forms\Components\TextInput::make('alamat_supplier')
+                    ->label('Alamat Supplier')
                     ->required(),
             ]);
     }
@@ -43,21 +53,21 @@ class SupplierResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('kode_Supplier')
-                    ->primary()
+                Tables\Columns\TextColumn::make('kode_supplier')
+       
                     ->searchable()
                     ->label('Kode Supplier'),
                     
                 Tables\Columns\TextColumn::make('nama_supplier')
-                    ->primary()
+        
                     ->searchable()
                     ->label('Nama Supplier'),
                 Tables\Columns\TextColumn::make('noHP_supplier')
                     ->searchable()
                     ->label('No HP Supplier'),
-                Tables\Columns\TextColumn::make('email_supplier')
+                Tables\Columns\TextColumn::make('alamat_supplier')
                     ->searchable()
-                    ->label('Email Supplier'),
+                    ->label('Alamat Supplier'),
             ])
             ->filters([
                 //

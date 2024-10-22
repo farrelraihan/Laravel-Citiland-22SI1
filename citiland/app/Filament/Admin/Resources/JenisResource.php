@@ -23,7 +23,7 @@ class JenisResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('KodeJeisBahanBaku')
+                Forms\Components\TextInput::make('KodeJenisBahanBaku')
                     ->label('Kode Bahan Baku')
                     ->required(),
                 Forms\Components\TextInput::make('JenisBahanBaku')
@@ -37,7 +37,6 @@ class JenisResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('KodeJenisBahanBaku')
-                    ->primary()
                     ->searchable()
                     ->label('Kode Jenis Bahan Baku'),
                 Tables\Columns\TextColumn::make('JenisBahanBaku')
