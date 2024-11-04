@@ -14,6 +14,23 @@ class ListPembelians extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+            Actions\Action::make('cetak_laporanPembelian') //nama Fungsi yang dipanggil
+            ->label('Cetak Laporan Pembelian') //label yang ditampilkan di button
+            ->icon('heroicon-o-printer')
+            ->action(fn() => static::cetakLaporan()) // A99
+            ->requiresConfirmation()
+            ->modalHeading('Cetak Laporan Pembelian')
+            ->modalSubheading('Apakah Anda yakin ingin mencetak laporan Pembelian?'),
         ];
     }
-}
+        public static function cetakLaporan() // A99
+        {
+            // Ambil data pengguna
+            $data = \App\Models\pembelian::all();
+            // Load view untuk cetak PDF
+            $pdf = \PDF::loadView('laporan.cetakPembelian', ['data' => $data]);
+            // Unduh file PDF
+            return response()->streamDownload(fn() => print($pdf->output()), 'laporan-pembelian.pdf');
+        }
+    }
+
