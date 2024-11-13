@@ -28,7 +28,8 @@ class ListPembelians extends ListRecords
             // Ambil data pengguna
             $data = \App\Models\pembelian::all();
             // Load view untuk cetak PDF
-            $pdf = \PDF::loadView('laporan.cetakPembelian', ['data' => $data]);
+            $pdf = \PDF::loadView('laporan.cetakPembelian', ['data' => $data])
+            ->setPaper('a4', 'landscape');  // Set orientation to landscape;
             // Unduh file PDF
             return response()->streamDownload(fn() => print($pdf->output()), 'laporan-pembelian.pdf');
         }

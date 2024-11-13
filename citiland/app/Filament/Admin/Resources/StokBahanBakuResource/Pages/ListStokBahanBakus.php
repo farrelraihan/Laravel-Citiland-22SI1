@@ -14,22 +14,47 @@ class ListStokBahanBakus extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
-            Actions\Action::make('cetak_laporanStok') //nama Fungsi yang dipanggil
-            ->label('Cetak Laporan Stok') //label yang ditampilkan di button
-            ->icon('heroicon-o-printer')
-            ->action(fn() => static::cetakLaporan()) // A99
-            ->requiresConfirmation()
-            ->modalHeading('Cetak Laporan Stok')
-            ->modalSubheading('Apakah Anda yakin ingin mencetak laporan Stok?'),
+            Actions\Action::make('cetak_laporanStok')
+                ->label('Cetak Laporan Stok')
+                ->icon('heroicon-o-printer')
+                ->action(fn() => static::cetakLaporan())
+                ->requiresConfirmation()
+                ->modalHeading('Cetak Laporan Stok')
+                ->modalSubheading('Apakah Anda yakin ingin mencetak laporan Stok?'),
+           
+            Actions\Action::make('cetak_laporanInventoryTurnover')
+                ->label('Cetak Laporan Perputaran Inventaris')
+                ->icon('heroicon-o-printer')
+                ->action(fn() => static::cetakLaporanInventoryTurnover())
+                ->requiresConfirmation()
+                ->modalHeading('Cetak Laporan Perputaran Inventaris')
+                ->modalSubheading('Apakah Anda yakin ingin mencetak laporan perputaran inventaris?'),
         ];
     }
-    public static function cetakLaporan() // A99
+
+    public static function cetakLaporan()
     {
-        // Ambil data pengguna
         $data = \App\Models\StokBahanBaku::all();
-        // Load view untuk cetak PDF
-        $pdf = \PDF::loadView('laporan.cetakStok', ['data' => $data]);
-        // Unduh file PDF
+        $pdf = \PDF::loadView('laporan.cetakStok', ['data' => $data])
+        ->setPaper('a4', 'landscape');  // Set orientation to landscape;
         return response()->streamDownload(fn() => print($pdf->output()), 'laporan-stok.pdf');
+    }
+
+    public static function cetakLaporanInventoryTurnover()
+    {
+        $data = \DB::table('stok_bahan_bakus')
+            ->join('pembelians', 'stok_bahan_bakus.KodeJenisBahanBaku', '=', 'pembelians.KodeJenisBahanBaku')
+            ->join('pemakaians', 'stok_bahan_bakus.KodeJenisBahanBaku', '=', 'pemakaians.KodeJenisBahanBaku')
+            ->select(
+                'stok_bahan_bakus.NamaBahanBaku',
+                \DB::raw('SUM(pembelians.JumlahPembelian) as total_pembelian'),
+                \DB::raw('SUM(pemakaians.JumlahPemakaian) as total_pemakaian'),
+                \DB::raw('SUM(stok_bahan_bakus.JumlahBahanBaku) as total_stok')
+            )
+            ->groupBy('stok_bahan_bakus.NamaBahanBaku')
+            ->get();
+        $pdf = \PDF::loadView('laporan.cetakLaporanInventoryTurnover', ['data' => $data])
+        ->setPaper('a4', 'landscape');  // Set orientation to landscape;
+        return response()->streamDownload(fn() => print($pdf->output()), 'laporan-perputaran-inventaris.pdf');
     }
 }
