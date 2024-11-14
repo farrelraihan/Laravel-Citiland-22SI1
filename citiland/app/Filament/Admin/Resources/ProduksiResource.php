@@ -3,17 +3,16 @@
 namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\ProduksiResource\Pages;
-use App\Filament\Admin\Resources\ProduksiResource\RelationManagers;
+use App\Imports\ProduksiImport;
 use App\Models\Produksi;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Components\FileUpload;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-
-use function Laravel\Prompts\form;
+use Filament\Notifications\Notification;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProduksiResource extends Resource
 {
@@ -35,7 +34,7 @@ class ProduksiResource extends Resource
     {
         return $form
             ->schema([
-                forms\Components\TextInput::make('KodeProduksi')
+                Forms\Components\TextInput::make('KodeProduksi')
                     ->label('Kode Produksi')
                     ->required()
                     ->placeholder('Kode Produksi'),
@@ -49,8 +48,6 @@ class ProduksiResource extends Resource
                     ->label('Nama Barang')
                     ->required()
                     ->placeholder('Nama Barang'),
-
-               
             ]);
     }
 
@@ -63,7 +60,6 @@ class ProduksiResource extends Resource
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('KodeBarang')
-    
                     ->searchable()
                     ->sortable(),
 
@@ -81,6 +77,33 @@ class ProduksiResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+            ])
+            ->headerActions([
+                Tables\Actions\Action::make('importExcel')
+                    ->label('Import Excel')
+                    ->action(function (array $data) {
+                        $filePath = storage_path('app/public/' . $data['file']);
+                        Excel::import(new ProduksiImport, $filePath);
+                        
+                        Notification::make()
+                            ->title('Data berhasil diimpor!')
+                            ->success()
+                            ->send();
+                    })
+                    ->form([
+                        FileUpload::make('file')
+                            ->label('Pilih File Excel')
+                            ->disk('public')
+                            ->directory('imports')
+                            ->acceptedFileTypes([
+                                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                                'application/vnd.ms-excel'
+                            ])
+                            ->required(),
+                    ])
+                    ->modalHeading('Import Data Produksi')
+                    ->modalButton('Import')
+                    ->color('success')
             ]);
     }
 

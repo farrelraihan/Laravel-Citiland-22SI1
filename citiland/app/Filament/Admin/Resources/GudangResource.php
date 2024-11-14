@@ -3,15 +3,16 @@
 namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\GudangResource\Pages;
-use App\Filament\Admin\Resources\GudangResource\RelationManagers;
+use App\Imports\GudangImport;
 use App\Models\Gudang;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Components\FileUpload;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Notifications\Notification;
+use Maatwebsite\Excel\Facades\Excel;
 
 class GudangResource extends Resource
 {
@@ -53,13 +54,11 @@ class GudangResource extends Resource
     {
         return $table
             ->columns([
-
                 Tables\Columns\TextColumn::make('kodeGudang')
                     ->searchable()
                     ->label('Kode Gudang'),
                     
                 Tables\Columns\TextColumn::make('nama_Gudang')
-          
                     ->searchable()
                     ->label('Nama Gudang'),
                 Tables\Columns\TextColumn::make('noHP_Gudang')
@@ -79,6 +78,33 @@ class GudangResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+            ])
+            ->headerActions([
+                Tables\Actions\Action::make('importExcel')
+                    ->label('Import Excel')
+                    ->action(function (array $data) {
+                        $filePath = storage_path('app/public/' . $data['file']);
+                        Excel::import(new GudangImport, $filePath);
+                        
+                        Notification::make()
+                            ->title('Data berhasil diimpor!')
+                            ->success()
+                            ->send();
+                    })
+                    ->form([
+                        FileUpload::make('file')
+                            ->label('Pilih File Excel')
+                            ->disk('public')
+                            ->directory('imports')
+                            ->acceptedFileTypes([
+                                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                                'application/vnd.ms-excel'
+                            ])
+                            ->required(),
+                    ])
+                    ->modalHeading('Import Data Gudang')
+                    ->modalButton('Import')
+                    ->color('success')
             ]);
     }
 

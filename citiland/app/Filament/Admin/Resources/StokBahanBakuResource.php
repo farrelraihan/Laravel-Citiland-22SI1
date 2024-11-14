@@ -3,15 +3,16 @@
 namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\StokBahanBakuResource\Pages;
-use App\Filament\Admin\Resources\StokBahanBakuResource\RelationManagers;
+use App\Imports\StokImport;
 use App\Models\StokBahanBaku;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Components\FileUpload;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Notifications\Notification;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StokBahanBakuResource extends Resource
 {
@@ -38,7 +39,7 @@ class StokBahanBakuResource extends Resource
                     ->required()
                     ->placeholder('Kode Stok Bahan Baku'),
 
-                    Forms\Components\TextInput::make('KodeJenisBahanBaku')
+                Forms\Components\TextInput::make('KodeJenisBahanBaku')
                     ->label('Kode Jenis Bahan Baku')
                     ->required()
                     ->placeholder('Kode Jenis Bahan Baku'),
@@ -149,6 +150,33 @@ class StokBahanBakuResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+            ])
+            ->headerActions([
+                Tables\Actions\Action::make('importExcel')
+                    ->label('Import Excel')
+                    ->action(function (array $data) {
+                        $filePath = storage_path('app/public/' . $data['file']);
+                        Excel::import(new StokImport, $filePath);
+                        
+                        Notification::make()
+                            ->title('Data berhasil diimpor!')
+                            ->success()
+                            ->send();
+                    })
+                    ->form([
+                        FileUpload::make('file')
+                            ->label('Pilih File Excel')
+                            ->disk('public')
+                            ->directory('imports')
+                            ->acceptedFileTypes([
+                                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                                'application/vnd.ms-excel'
+                            ])
+                            ->required(),
+                    ])
+                    ->modalHeading('Import Data Stok')
+                    ->modalButton('Import')
+                    ->color('success')
             ]);
     }
 

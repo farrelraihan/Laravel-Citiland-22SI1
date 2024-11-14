@@ -3,15 +3,16 @@
 namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\PembelianResource\Pages;
-use App\Filament\Admin\Resources\PembelianResource\RelationManagers;
+use App\Imports\PembelianImport;
 use App\Models\Pembelian;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Components\FileUpload;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Notifications\Notification;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PembelianResource extends Resource
 {
@@ -37,7 +38,6 @@ class PembelianResource extends Resource
                     ->label('Kode Pembelian')
                     ->required()
                     ->placeholder('Kode Pembelian'),
-                
 
                 Forms\Components\TextInput::make('KodeJenisBahanBaku')
                     ->label('Kode Jenis Bahan Baku')
@@ -59,7 +59,7 @@ class PembelianResource extends Resource
                     ->required()
                     ->placeholder('Kode Supplier'),
 
-                Forms\Components\TextInput::make('HargaBahanbaku')
+                Forms\Components\TextInput::make('HargaBahanBaku')
                     ->label('Harga Bahan Baku')
                     ->required()
                     ->placeholder('Harga Bahan Baku'),
@@ -104,8 +104,6 @@ class PembelianResource extends Resource
                 Tables\Columns\TextColumn::make('TanggalPembelian')
                     ->label('Tanggal Pembelian')
                     ->sortable(),
-                
-
             ])
             ->filters([
                 //
@@ -117,6 +115,33 @@ class PembelianResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+            ])
+            ->headerActions([
+                Tables\Actions\Action::make('importExcel')
+                    ->label('Import Excel')
+                    ->action(function (array $data) {
+                        $filePath = storage_path('app/public/' . $data['file']);
+                        Excel::import(new PembelianImport, $filePath);
+                        
+                        Notification::make()
+                            ->title('Data berhasil diimpor!')
+                            ->success()
+                            ->send();
+                    })
+                    ->form([
+                        FileUpload::make('file')
+                            ->label('Pilih File Excel')
+                            ->disk('public')
+                            ->directory('imports')
+                            ->acceptedFileTypes([
+                                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                                'application/vnd.ms-excel'
+                            ])
+                            ->required(),
+                    ])
+                    ->modalHeading('Import Data Pembelian')
+                    ->modalButton('Import')
+                    ->color('success')
             ]);
     }
 

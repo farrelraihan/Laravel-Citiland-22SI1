@@ -3,15 +3,16 @@
 namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\ReturResource\Pages;
-use App\Filament\Admin\Resources\ReturResource\RelationManagers;
+use App\Imports\ReturImport;
 use App\Models\Retur;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Components\FileUpload;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Notifications\Notification;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReturResource extends Resource
 {
@@ -42,7 +43,7 @@ class ReturResource extends Resource
                     ->label('Kode Jenis Bahan Baku')
                     ->required()
                     ->placeholder('Kode Jenis Bahan Baku'),
-               
+
                 Forms\Components\TextInput::make('kode_supplier')
                     ->label('Kode Supplier')
                     ->required()
@@ -54,7 +55,7 @@ class ReturResource extends Resource
                     ->placeholder('Jumlah Bahan Baku'),
 
                 Forms\Components\TextInput::make('HargaRetur')
-                    ->label('Harga Retur ')
+                    ->label('Harga Retur')
                     ->required()
                     ->placeholder('Harga Retur'),
 
@@ -74,9 +75,8 @@ class ReturResource extends Resource
     {
         return $table
             ->columns([
-
                 Tables\Columns\TextColumn::make('KodeRetur')
-                    ->label('Kode Retur ')
+                    ->label('Kode Retur')
                     ->searchable()
                     ->sortable(),
 
@@ -120,6 +120,33 @@ class ReturResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+            ])
+            ->headerActions([
+                Tables\Actions\Action::make('importExcel')
+                    ->label('Import Excel')
+                    ->action(function (array $data) {
+                        $filePath = storage_path('app/public/' . $data['file']);
+                        Excel::import(new ReturImport, $filePath);
+                        
+                        Notification::make()
+                            ->title('Data berhasil diimpor!')
+                            ->success()
+                            ->send();
+                    })
+                    ->form([
+                        FileUpload::make('file')
+                            ->label('Pilih File Excel')
+                            ->disk('public')
+                            ->directory('imports')
+                            ->acceptedFileTypes([
+                                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                                'application/vnd.ms-excel'
+                            ])
+                            ->required(),
+                    ])
+                    ->modalHeading('Import Data Retur')
+                    ->modalButton('Import')
+                    ->color('success')
             ]);
     }
 

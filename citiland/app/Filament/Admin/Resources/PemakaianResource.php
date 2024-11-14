@@ -3,15 +3,16 @@
 namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\PemakaianResource\Pages;
-use App\Filament\Admin\Resources\PemakaianResource\RelationManagers;
+use App\Imports\PemakaianImport;
 use App\Models\Pemakaian;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Components\FileUpload;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Notifications\Notification;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PemakaianResource extends Resource
 {
@@ -37,7 +38,6 @@ class PemakaianResource extends Resource
                     ->label('Kode Pemakaian')
                     ->required()
                     ->placeholder('Kode Pemakaian'),
-             
 
                 Forms\Components\TextInput::make('KodeJenisBahanBaku')
                     ->label('Kode Jenis Bahan Baku')
@@ -66,32 +66,29 @@ class PemakaianResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('KodePemakaian')
-            
-                                    ->label('Kode Pemakaian')
-                                    ->searchable()
-                                    ->sortable(),
+                    ->label('Kode Pemakaian')
+                    ->searchable()
+                    ->sortable(),
                 
-                                Tables\Columns\TextColumn::make('KodeJenisBahanBaku')
-                                    ->label('Kode Jenis Bahan Baku')
-                                    ->searchable()
-                                    ->sortable(),
+                Tables\Columns\TextColumn::make('KodeJenisBahanBaku')
+                    ->label('Kode Jenis Bahan Baku')
+                    ->searchable()
+                    ->sortable(),
                 
-                                Tables\Columns\TextColumn::make('JumlahPemakaian')
-                                    ->label('Jumlah Pemakaian')
-                                    ->searchable()
-                                    ->sortable(),
+                Tables\Columns\TextColumn::make('JumlahPemakaian')
+                    ->label('Jumlah Pemakaian')
+                    ->searchable()
+                    ->sortable(),
                 
-                                Tables\Columns\TextColumn::make('UnitBahanBaku')
-                                    ->label('Unit Bahan Baku')
-                                    ->searchable()
-                                    ->sortable(),
+                Tables\Columns\TextColumn::make('UnitBahanBaku')
+                    ->label('Unit Bahan Baku')
+                    ->searchable()
+                    ->sortable(),
                 
-                                Tables\Columns\TextColumn::make('TanggalPemakaian')
-                                    ->label('Tanggal Pemakaian')
-                                    ->searchable()
-                                    ->sortable(),
-                
-                 
+                Tables\Columns\TextColumn::make('TanggalPemakaian')
+                    ->label('Tanggal Pemakaian')
+                    ->searchable()
+                    ->sortable(),
             ])
             ->filters([
                 //
@@ -103,6 +100,33 @@ class PemakaianResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+            ])
+            ->headerActions([
+                Tables\Actions\Action::make('importExcel')
+                    ->label('Import Excel')
+                    ->action(function (array $data) {
+                        $filePath = storage_path('app/public/' . $data['file']);
+                        Excel::import(new PemakaianImport, $filePath);
+                        
+                        Notification::make()
+                            ->title('Data berhasil diimpor!')
+                            ->success()
+                            ->send();
+                    })
+                    ->form([
+                        FileUpload::make('file')
+                            ->label('Pilih File Excel')
+                            ->disk('public')
+                            ->directory('imports')
+                            ->acceptedFileTypes([
+                                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                                'application/vnd.ms-excel'
+                            ])
+                            ->required(),
+                    ])
+                    ->modalHeading('Import Data Pemakaian')
+                    ->modalButton('Import')
+                    ->color('success')
             ]);
     }
 
