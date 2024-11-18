@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Admin\Widgets\SupplierPerformanceChart;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -17,6 +18,11 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use App\Filament\Admin\Widgets\StokGrowthChart;
+use App\Filament\Admin\Widgets\StokMacamChart;
+use App\Filament\Admin\Widgets\LowStockAlertWidget;
+
+use App\Filament\Admin\Widgets\HighestUsageItemsChart;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -37,6 +43,10 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
+                LowStockAlertWidget::class,
+                SupplierPerformanceChart::class,
+                StokMacamChart::class,
+                HighestUsageItemsChart::class,
             ])
             ->middleware([
                 EncryptCookies::class,
