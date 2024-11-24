@@ -18,7 +18,9 @@ class GudangResource extends Resource
 {
     protected static ?string $model = Gudang::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
+
+    protected static ?string $navigationGroup = 'Admin Management';
 
     public static function getModelLabel(): string
     {

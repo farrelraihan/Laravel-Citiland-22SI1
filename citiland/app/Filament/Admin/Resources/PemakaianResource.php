@@ -18,7 +18,9 @@ class PemakaianResource extends Resource
 {
     protected static ?string $model = Pemakaian::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-arrow-trending-down';
+
+    protected static ?string $navigationGroup = 'Transaction Management';
 
     public static function getModelLabel(): string
     {

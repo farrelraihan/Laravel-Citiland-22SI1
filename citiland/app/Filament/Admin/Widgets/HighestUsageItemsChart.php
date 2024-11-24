@@ -13,29 +13,33 @@ class HighestUsageItemsChart extends ChartWidget
     {
         // Mengambil data pemakaian tertinggi setiap bulan dari database
         $data = DB::table('pemakaians')
+            ->join('jenis', 'pemakaians.KodeJenisBahanBaku', '=', 'jenis.KodeJenisBahanBaku')
             ->select(
                 DB::raw('DATE_FORMAT(TanggalPemakaian, "%Y-%m") as month'),
-                'KodeJenisBahanBaku',
+                'pemakaians.KodeJenisBahanBaku',
+                'jenis.JenisBahanBaku',
                 DB::raw('MAX(JumlahPemakaian) as max_usage')
             )
-            ->groupBy('month', 'KodeJenisBahanBaku')
+            ->groupBy('month', 'pemakaians.KodeJenisBahanBaku', 'jenis.JenisBahanBaku')
             ->orderBy('month', 'asc')
             ->get();
 
         // Variabel untuk menyusun data grafik
         $months = [];
         $items = [];
+        $itemNames = [];
         $usages = [];
 
         foreach ($data as $row) {
             $months[] = $row->month;
             $items[] = $row->KodeJenisBahanBaku;
+            $itemNames[] = $row->JenisBahanBaku;
             $usages[] = $row->max_usage;
         }
 
         // Mengembalikan data dalam format yang dapat diterima Chart.js
         return [
-            'datasets' => [
+        'datasets' => [
                 [
                     'label' => 'Jumlah Pemakaian Tertinggi',
                     'data' => $usages,
@@ -46,35 +50,39 @@ class HighestUsageItemsChart extends ChartWidget
             ],
             'labels' => $months,
             'options' => [
-                'responsive' => true,
-                'maintainAspectRatio' => false,
+                'plugins' => [
+                    'legend' => [
+                        'display' => true,
+                    ],
+                    'tooltip' => [
+                        'enabled' => true,
+                        'mode' => 'index',
+                        'intersect' => false,
+                        'callbacks' => [
+                            'label' => "function(context) {
+                                return itemNames[context.dataIndex] + ': ' + context.formattedValue;
+                            }"
+                        ]
+                    ]
+                ],
                 'scales' => [
+                    'y' => [
+                        'beginAtZero' => true,
+                        'title' => [
+                            'display' => true,
+                            'text' => 'Jumlah Pemakaian'
+                        ]
+                    ],
                     'x' => [
                         'title' => [
                             'display' => true,
                             'text' => 'Bulan'
                         ]
-                    ],
-                    'y' => [
-                        'title' => [
-                            'display' => true,
-                            'text' => 'Jumlah Pemakaian'
-                        ]
                     ]
                 ],
-                'plugins' => [
-                    'tooltip' => [
-                        'callbacks' => [
-                            'label' => function($tooltipItem) use ($items) {
-                                return $items[$tooltipItem->dataIndex] . ': ' . $tooltipItem->formattedValue;
-                            }
-                        ]
-                    ]
-                ]
             ],
         ];
     }
-
     protected function getType(): string
     {
         return 'line';
