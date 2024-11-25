@@ -21,5 +21,8 @@ class Admin extends Model
 
     public $incrementing = false;
 
-
+    public static function getLastPrimaryId()
+{
+    return self::orderBy('kodeAdmin', 'desc')->first()->kodeAdmin ?? 'No records found';
+}
 }

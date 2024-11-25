@@ -24,4 +24,14 @@ class StokBahanBaku extends Model
     protected $primaryKey = 'KodebahanBaku';
 
     public $incrementing = false;
+
+    public function jenis()
+{
+    return $this->belongsTo(Jenis::class, 'KodeJenisBahanBaku', 'KodeJenisBahanBaku');
 }
+public static function getLastPrimaryId()
+{
+    return self::orderBy('KodebahanBaku', 'desc')->first()->KodebahanBaku ?? 'No records found';
+}
+}
+

@@ -40,6 +40,11 @@ class ProduksiResource extends Resource
                     ->label('Kode Produksi')
                     ->required()
                     ->placeholder('Kode Produksi'),
+                    
+                Forms\Components\TextInput::make('lastPrimaryId')
+                    ->label('Last Primary ID')
+                    ->default(Produksi::getLastPrimaryId())
+                    ->disabled(),
 
                 Forms\Components\TextInput::make('KodeBarang')
                     ->label('Kode Barang')

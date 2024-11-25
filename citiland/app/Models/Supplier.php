@@ -17,4 +17,8 @@ class Supplier extends Model
 
     protected $primaryKey = 'kode_supplier';
     public $incrementing = false;
+    public static function getLastPrimaryId()
+{
+    return self::orderBy('kode_supplier', 'desc')->first()->kode_supplier ?? 'No records found';
+}
 }

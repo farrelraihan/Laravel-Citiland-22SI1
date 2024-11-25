@@ -29,6 +29,11 @@ class JenisResource extends Resource
                 Forms\Components\TextInput::make('KodeJenisBahanBaku')
                     ->label('Kode Bahan Baku')
                     ->required(),
+                
+                Forms\Components\TextInput::make('lastPrimaryId')
+                    ->label('Last Primary ID')
+                    ->default(Jenis::getLastPrimaryId())
+                    ->disabled(),
                 Forms\Components\TextInput::make('JenisBahanBaku')
                     ->label('Jenis Bahan Baku')
                     ->required(),

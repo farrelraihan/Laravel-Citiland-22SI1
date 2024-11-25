@@ -38,16 +38,21 @@ class ReturResource extends Resource
                     ->label('Kode Retur')
                     ->required()
                     ->placeholder('Kode Retur'),
+                
+                Forms\Components\TextInput::make('lastPrimaryId')
+                    ->label('Last Primary ID')
+                    ->default(Retur::getLastPrimaryId())
+                    ->disabled(),
 
-                Forms\Components\TextInput::make('KodeJenisBahanBaku')
-                    ->label('Kode Jenis Bahan Baku')
-                    ->required()
-                    ->placeholder('Kode Jenis Bahan Baku'),
+                Forms\Components\Select::make('KodeJenisBahanBaku')
+                    ->label('Jenis Bahan Baku')
+                    ->relationship('jenis', 'JenisBahanBaku')
+                    ->required(),
 
-                Forms\Components\TextInput::make('kode_supplier')
-                    ->label('Kode Supplier')
-                    ->required()
-                    ->placeholder('Kode Supplier'),
+                Forms\Components\Select::make('kode_supplier')
+                    ->label('Supplier')
+                    ->relationship('supplier', 'nama_supplier')
+                    ->required(),
 
                 Forms\Components\TextInput::make('JumlahBahanBaku')
                     ->label('Jumlah Bahan Baku')

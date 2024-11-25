@@ -40,11 +40,16 @@ class PembelianResource extends Resource
                     ->label('Kode Pembelian')
                     ->required()
                     ->placeholder('Kode Pembelian'),
+                    
+                Forms\Components\TextInput::make('lastPrimaryId')
+                    ->label('Last Primary ID')
+                    ->default(Pembelian::getLastPrimaryId())
+                    ->disabled(),
 
-                Forms\Components\TextInput::make('KodeJenisBahanBaku')
-                    ->label('Kode Jenis Bahan Baku')
-                    ->required()
-                    ->placeholder('Kode Jenis Bahan Baku'),
+                    Forms\Components\Select::make('KodeJenisBahanBaku')
+                    ->label('Jenis Bahan Baku')
+                    ->relationship('jenis', 'JenisBahanBaku')
+                    ->required(),
 
                 Forms\Components\TextInput::make('JumlahPembelian')
                     ->label('Jumlah Pembelian')
@@ -56,10 +61,10 @@ class PembelianResource extends Resource
                     ->required()
                     ->placeholder('Unit Bahan Baku'),
 
-                Forms\Components\TextInput::make('kode_supplier')
-                    ->label('Kode Supplier')
-                    ->required()
-                    ->placeholder('Kode Supplier'),
+                Forms\Components\Select::make('kode_supplier')
+                    ->label('Supplier')
+                    ->relationship('supplier', 'nama_supplier')
+                    ->required(),
 
                 Forms\Components\TextInput::make('HargaBahanBaku')
                     ->label('Harga Bahan Baku')

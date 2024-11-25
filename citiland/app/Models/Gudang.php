@@ -19,4 +19,8 @@ class Gudang extends Model
 
     public $incrementing = false;
 
+    public static function getLastPrimaryId()
+{
+    return self::orderBy('kodeGudang', 'desc')->first()->kodeGudang ?? 'No records found';
+}
 }

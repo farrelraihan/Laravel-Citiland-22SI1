@@ -14,4 +14,9 @@ class Jenis extends Model
         'KodeJenisBahanBaku',
         'JenisBahanBaku',
     ];
+
+    public static function getLastPrimaryId()
+{
+    return self::orderBy('KodeJenisBahanBaku', 'desc')->first()->KodeJenisBahanBaku ?? 'No records found';
+}
 }

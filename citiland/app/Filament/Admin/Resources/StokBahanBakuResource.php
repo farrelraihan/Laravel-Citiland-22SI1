@@ -40,11 +40,16 @@ class StokBahanBakuResource extends Resource
                     ->label('Kode Stok Bahan Baku')
                     ->required()
                     ->placeholder('Kode Stok Bahan Baku'),
+                
+                Forms\Components\TextInput::make('lastPrimaryId')
+                    ->label('Last Primary ID')
+                    ->default(StokBahanBaku::getLastPrimaryId())
+                    ->disabled(),
 
-                Forms\Components\TextInput::make('KodeJenisBahanBaku')
-                    ->label('Kode Jenis Bahan Baku')
-                    ->required()
-                    ->placeholder('Kode Jenis Bahan Baku'),
+                Forms\Components\Select::make('KodeJenisBahanBaku')
+                    ->label('Jenis Bahan Baku')
+                    ->relationship('jenis', 'JenisBahanBaku')
+                    ->required(),
 
                 Forms\Components\TextInput::make('NamaBahanBaku')
                     ->label('Nama Bahan Baku')

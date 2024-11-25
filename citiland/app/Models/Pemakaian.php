@@ -21,4 +21,14 @@ class Pemakaian extends Model
     protected $primaryKey = 'KodePemakaian';
     public $incrementing = false;
     public $timestamps = false;
+
+        public function jenis()
+    {
+        return $this->belongsTo(Jenis::class, 'KodeJenisBahanBaku', 'KodeJenisBahanBaku');
+    }
+
+    public static function getLastPrimaryId()
+{
+    return self::orderBy('KodePemakaian', 'desc')->first()->KodePemakaian ?? 'No records found';
+}
 }

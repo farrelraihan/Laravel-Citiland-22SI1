@@ -57,13 +57,13 @@ class AdminSeeder extends Seeder
                 'Email' => 'james.anderson@example.com',
             ],
             [
-                'kodeAdmin' => 'ADM000010',
+                'kodeAdmin' => 'ADM00010',
                 'Nama' => 'Laura Thompson',
                 'NoHP' => '085647382910',
                 'Email' => 'laura.thompson@example.com',
             ],
             [
-                'kodeAdmin' => 'ADM000011',
+                'kodeAdmin' => 'ADM00011',
                 'Nama' => 'Robert Johnson',
                 'NoHP' => '085713849202',
                 'Email' => 'robert.johnson@example.com',

@@ -41,10 +41,15 @@ class PemakaianResource extends Resource
                     ->required()
                     ->placeholder('Kode Pemakaian'),
 
-                Forms\Components\TextInput::make('KodeJenisBahanBaku')
-                    ->label('Kode Jenis Bahan Baku')
-                    ->required()
-                    ->placeholder('Kode Jenis Bahan Baku'),
+                Forms\Components\TextInput::make('lastPrimaryId')
+                    ->label('Last Primary ID')
+                    ->default(Pemakaian::getLastPrimaryId())
+                    ->disabled(),
+                
+                Forms\Components\Select::make('KodeJenisBahanBaku')
+                    ->label('Jenis Bahan Baku')
+                    ->relationship('jenis', 'JenisBahanBaku')
+                    ->required(),
 
                 Forms\Components\TextInput::make('JumlahPemakaian')
                     ->label('Jumlah Pemakaian')
