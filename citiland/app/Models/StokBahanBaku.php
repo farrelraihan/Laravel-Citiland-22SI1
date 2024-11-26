@@ -9,19 +9,23 @@ class StokBahanBaku extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'KodebahanBaku',
+        'KodeBahanBaku',
         'KodeJenisBahanBaku',
         'NamaBahanBaku',
-        'UnitBahanBaku',
-        'JumlahBBMasuk',
-        'JumlahBBKeluar',
-        'Jumlah_Min',
-        'HargaBahanBaku',
         'JumlahBahanBaku',
-        'PemakaianRataRata',
+
     ];
 
-    protected $primaryKey = 'KodebahanBaku';
+    protected $primaryKey = 'KodeBahanBaku';
 
     public $incrementing = false;
+    public function jenis()
+    {
+        return $this->belongsTo(Jenis::class, 'KodeJenisBahanBaku', 'KodeJenisBahanBaku');
+    }
+    public static function getLastPrimaryId()
+    {
+        $lastRecord = self::orderBy('KodeBahanBaku', 'desc')->first();
+        return $lastRecord ? $lastRecord->KodebahanBaku : 'No records found';
+    }
 }

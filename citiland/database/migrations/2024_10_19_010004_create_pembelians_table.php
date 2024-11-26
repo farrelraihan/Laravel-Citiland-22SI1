@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('pembelians', function (Blueprint $table) {
             $table->char('KodePembelian', 10)->primary();
-            $table->char('KodeJenisBahanBaku', 10); 
-            $table->string('JumlahPembelian', 20);
-            $table->string('UnitBahanBaku', 5);
-            $table->char('kode_supplier'); //ambil dari tabel supplier
-            $table->string('HargaBahanBaku', 25);
+            $table->char('KodeJenisBahanBaku', 10);
+            $table->integer('JumlahPembelian');
+            $table->char('kode_supplier', 10);
+            $table->decimal('HargaBahanBaku', 15, 2);
             $table->dateTime('TanggalPembelian');
+            $table->timestamps();
 
-
+            // Foreign key relationships
             $table->foreign('KodeJenisBahanBaku')->references('KodeJenisBahanBaku')->on('jenis');
             $table->foreign('kode_supplier')->references('kode_supplier')->on('suppliers');
 

@@ -12,13 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pemakaians', function (Blueprint $table) {
-            $table->char('KodePemakaian', length: 10)->primary();
-            $table->char('KodeJenisBahanBaku', length: 10); 
-            $table->char('JumlahPemakaian', length: 20);
-            $table->char('UnitBahanBaku', length: 5);
+            $table->char('KodePemakaian', 10)->primary();
+            $table->char('KodeJenisBahanBaku', 10);
+            $table->integer('JumlahPemakaian');
             $table->dateTime('TanggalPemakaian');
-         
 
+            // Foreign key relationship
             $table->foreign('KodeJenisBahanBaku')->references('KodeJenisBahanBaku')->on('jenis');
         });
     }

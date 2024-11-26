@@ -13,6 +13,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Notifications\Notification;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\Jenis;
 
 class PemakaianResource extends Resource
 {
@@ -36,30 +37,31 @@ class PemakaianResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('KodePemakaian')
-                    ->label('Kode Pemakaian')
-                    ->required()
-                    ->placeholder('Kode Pemakaian'),
+            Forms\Components\TextInput::make('KodePemakaian')
+                ->label('Kode Pemakaian')
+                ->required(),
+            
+            Forms\Components\TextInput::make('lastPrimaryId')
+                ->label('Last Primary ID')
+                ->default(Pemakaian::getLastPrimaryId())
+                ->disabled(),
 
-                Forms\Components\TextInput::make('KodeJenisBahanBaku')
-                    ->label('Kode Jenis Bahan Baku')
-                    ->required()
-                    ->placeholder('Kode Jenis Bahan Baku'),
+            Forms\Components\Select::make('KodeJenisBahanBaku')
+                ->label('Jenis Bahan Baku')
+                ->options(function () {
+                    return Jenis::all()->pluck('full_label', 'KodeJenisBahanBaku');
+                })
+                ->searchable()
+                ->required(),
 
-                Forms\Components\TextInput::make('JumlahPemakaian')
-                    ->label('Jumlah Pemakaian')
-                    ->required()
-                    ->placeholder('Jumlah Pemakaian'),
+            Forms\Components\TextInput::make('JumlahPemakaian')
+                ->label('Jumlah Pemakaian')
+                ->numeric()
+                ->required(),
 
-                Forms\Components\TextInput::make('UnitBahanBaku')
-                    ->label('Unit Bahan Baku')
-                    ->required()
-                    ->placeholder('Unit Bahan Baku'),
-
-                Forms\Components\DateTimePicker::make('TanggalPemakaian')
-                    ->label('Tanggal Pemakaian')
-                    ->required()
-                    ->placeholder('Tanggal Pemakaian'),
+            Forms\Components\DateTimePicker::make('TanggalPemakaian')
+                ->label('Tanggal Pemakaian')
+                ->required(),
             ]);
     }
 
@@ -67,30 +69,26 @@ class PemakaianResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('KodePemakaian')
-                    ->label('Kode Pemakaian')
-                    ->searchable()
-                    ->sortable(),
+            Tables\Columns\TextColumn::make('KodePemakaian')
+                ->label('Kode Pemakaian')
+                ->searchable()
+                ->sortable(),
+
+            Tables\Columns\TextColumn::make('KodeJenisBahanBaku')
+                ->label('Kode Jenis Bahan Baku')
+                ->searchable()
+                ->sortable(),
+
+            Tables\Columns\TextColumn::make('JumlahPemakaian')
+                ->label('Jumlah Pemakaian')
+                ->sortable(),
+
+            Tables\Columns\TextColumn::make('TanggalPemakaian')
+                ->label('Tanggal Pemakaian')
+                ->dateTime()
+                ->sortable(),
                 
-                Tables\Columns\TextColumn::make('KodeJenisBahanBaku')
-                    ->label('Kode Jenis Bahan Baku')
-                    ->searchable()
-                    ->sortable(),
-                
-                Tables\Columns\TextColumn::make('JumlahPemakaian')
-                    ->label('Jumlah Pemakaian')
-                    ->searchable()
-                    ->sortable(),
-                
-                Tables\Columns\TextColumn::make('UnitBahanBaku')
-                    ->label('Unit Bahan Baku')
-                    ->searchable()
-                    ->sortable(),
-                
-                Tables\Columns\TextColumn::make('TanggalPemakaian')
-                    ->label('Tanggal Pemakaian')
-                    ->searchable()
-                    ->sortable(),
+
             ])
             ->filters([
                 //

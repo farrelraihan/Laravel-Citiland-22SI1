@@ -41,6 +41,11 @@ class AdminResource extends Resource
                     ->label('Kode Admin')
                     ->required()
                     ->placeholder('Kode Admin'),
+                
+                Forms\Components\TextInput::make('lastPrimaryId')
+                    ->label('Last Primary ID')
+                    ->default(Admin::getLastPrimaryId())
+                    ->disabled(),
 
 
                 Forms\Components\TextInput::make('Nama')

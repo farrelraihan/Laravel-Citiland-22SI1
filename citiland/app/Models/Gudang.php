@@ -18,5 +18,10 @@ class Gudang extends Model
     protected $primaryKey = 'kodeGudang';
 
     public $incrementing = false;
+    public static function getLastPrimaryId()
+{
+    $lastRecord = self::orderBy('kodeGudang', 'desc')->first();
+    return $lastRecord ? $lastRecord->kodeGudang : 'No records found';
+}
 
 }

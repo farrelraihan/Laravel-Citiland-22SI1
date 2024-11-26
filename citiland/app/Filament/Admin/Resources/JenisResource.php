@@ -26,12 +26,22 @@ class JenisResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('KodeJenisBahanBaku')
-                    ->label('Kode Bahan Baku')
-                    ->required(),
-                Forms\Components\TextInput::make('JenisBahanBaku')
-                    ->label('Jenis Bahan Baku')
-                    ->required(),
+            Forms\Components\TextInput::make('KodeJenisBahanBaku')
+                ->label('Kode Jenis Bahan Baku')
+                ->required(),
+            
+            Forms\Components\TextInput::make('lastPrimaryId')
+                ->label('Last Primary ID')
+                ->default(Jenis::getLastPrimaryId())
+                ->disabled(),
+
+            Forms\Components\TextInput::make('JenisBahanBaku')
+                ->label('Jenis Bahan Baku')
+                ->required(),
+
+            Forms\Components\TextInput::make('UnitBahanBaku')
+                ->label('Unit Bahan Baku')
+                ->required(),
             ]);
     }
 
@@ -40,11 +50,18 @@ class JenisResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('KodeJenisBahanBaku')
-                    ->searchable()
-                    ->label('Kode Jenis Bahan Baku'),
-                Tables\Columns\TextColumn::make('JenisBahanBaku')
-                    ->searchable()
-                    ->label('Jenis Bahan Baku'),
+                ->label('Kode Jenis Bahan Baku')
+                ->searchable()
+                ->sortable(),
+
+            Tables\Columns\TextColumn::make('JenisBahanBaku')
+                ->label('Jenis Bahan Baku')
+                ->searchable()
+                ->sortable(),
+
+            Tables\Columns\TextColumn::make('UnitBahanBaku')
+                ->label('Unit Bahan Baku')
+                ->sortable(),
             ])
             ->filters([
                 //

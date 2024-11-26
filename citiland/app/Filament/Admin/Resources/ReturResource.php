@@ -13,6 +13,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Notifications\Notification;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\Jenis;
+use App\Models\Supplier;
 
 class ReturResource extends Resource
 {
@@ -34,40 +36,44 @@ class ReturResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('KodeRetur')
-                    ->label('Kode Retur')
-                    ->required()
-                    ->placeholder('Kode Retur'),
+            Forms\Components\TextInput::make('KodeRetur')
+                ->label('Kode Retur')
+                ->required(),
+            
+            Forms\Components\TextInput::make('lastPrimaryId')
+                ->label('Last Primary ID')
+                ->default(Retur::getLastPrimaryId())
+                ->disabled(),
 
-                Forms\Components\TextInput::make('KodeJenisBahanBaku')
-                    ->label('Kode Jenis Bahan Baku')
-                    ->required()
-                    ->placeholder('Kode Jenis Bahan Baku'),
+            Forms\Components\Select::make('KodeJenisBahanBaku')
+                ->label('Jenis Bahan Baku')
+                ->options(function () {
+                    return Jenis::all()->pluck('full_label', 'KodeJenisBahanBaku');
+                })
+                ->searchable()
+                ->required(),
 
-                Forms\Components\TextInput::make('kode_supplier')
-                    ->label('Kode Supplier')
-                    ->required()
-                    ->placeholder('Kode Supplier'),
+            Forms\Components\Select::make('kode_supplier')
+                ->label('Supplier')
+                ->options(function () {
+                    return Supplier::all()->pluck('full_label', 'kode_supplier');
+                })
+                ->searchable()
+                ->required(),
 
-                Forms\Components\TextInput::make('JumlahBahanBaku')
-                    ->label('Jumlah Bahan Baku')
-                    ->required()
-                    ->placeholder('Jumlah Bahan Baku'),
+            Forms\Components\TextInput::make('JumlahBahanBaku')
+                ->label('Jumlah Bahan Baku')
+                ->numeric()
+                ->required(),
 
-                Forms\Components\TextInput::make('HargaRetur')
-                    ->label('Harga Retur')
-                    ->required()
-                    ->placeholder('Harga Retur'),
+            Forms\Components\TextInput::make('HargaRetur')
+                ->label('Harga Retur')
+                ->numeric()
+                ->required(),
 
-                Forms\Components\TextInput::make('satuanBahanBaku')
-                    ->label('Satuan Bahan Baku')
-                    ->required()
-                    ->placeholder('Satuan Bahan Baku'),
-
-                Forms\Components\DateTimePicker::make('TanggalRetur')
-                    ->label('Tanggal Retur')
-                    ->required()
-                    ->placeholder('Tanggal Retur'),
+            Forms\Components\DateTimePicker::make('TanggalRetur')
+                ->label('Tanggal Retur')
+                ->required(),
             ]);
     }
 
@@ -75,40 +81,36 @@ class ReturResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('KodeRetur')
-                    ->label('Kode Retur')
-                    ->searchable()
-                    ->sortable(),
+            Tables\Columns\TextColumn::make('KodeRetur')
+                ->label('Kode Retur')
+                ->searchable()
+                ->sortable(),
 
-                Tables\Columns\TextColumn::make('KodeJenisBahanBaku')
-                    ->label('Kode Jenis Bahan Baku')
-                    ->searchable()
-                    ->sortable(),
+            Tables\Columns\TextColumn::make('KodeJenisBahanBaku')
+                ->label('Kode Jenis Bahan Baku')
+                ->searchable()
+                ->sortable(),
 
-                Tables\Columns\TextColumn::make('kode_supplier')
-                    ->label('Kode Supplier')
-                    ->searchable()
-                    ->sortable(),
+            Tables\Columns\TextColumn::make('kode_supplier')
+                ->label('Kode Supplier')
+                ->searchable()
+                ->sortable(),
 
-                Tables\Columns\TextColumn::make('JumlahBahanBaku')
-                    ->label('Jumlah Bahan Baku')
-                    ->searchable()
-                    ->sortable(),
+            Tables\Columns\TextColumn::make('JumlahBahanBaku')
+                ->label('Jumlah Bahan Baku')
+                ->sortable(),
 
-                Tables\Columns\TextColumn::make('HargaRetur')
-                    ->label('Harga Retur')
-                    ->searchable()
-                    ->sortable(),
+            Tables\Columns\TextColumn::make('HargaRetur')
+                ->label('Harga Retur')
+                ->money('IDR', true)
+                ->sortable(),
 
-                Tables\Columns\TextColumn::make('satuanBahanBaku')
-                    ->label('Satuan Bahan Baku')
-                    ->searchable()
-                    ->sortable(),
+            Tables\Columns\TextColumn::make('TanggalRetur')
+                ->label('Tanggal Retur')
+                ->dateTime()
+                ->sortable(),
 
-                Tables\Columns\TextColumn::make('TanggalRetur')
-                    ->label('Tanggal Retur')
-                    ->searchable()
-                    ->sortable(),
+ 
             ])
             ->filters([
                 //

@@ -36,20 +36,22 @@ class ProduksiResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('KodeProduksi')
-                    ->label('Kode Produksi')
-                    ->required()
-                    ->placeholder('Kode Produksi'),
+            Forms\Components\TextInput::make('KodeProduksi')
+                ->label('Kode Produksi')
+                ->required(),
+            
+            Forms\Components\TextInput::make('lastPrimaryId')
+                ->label('Last Primary ID')
+                ->default(Produksi::getLastPrimaryId())
+                ->disabled(),
 
-                Forms\Components\TextInput::make('KodeBarang')
-                    ->label('Kode Barang')
-                    ->required()
-                    ->placeholder('Kode Barang'),
+            Forms\Components\TextInput::make('KodeBarang')
+                ->label('Kode Barang')
+                ->required(),
 
-                Forms\Components\TextInput::make('NamaBarang')
-                    ->label('Nama Barang')
-                    ->required()
-                    ->placeholder('Nama Barang'),
+            Forms\Components\TextInput::make('NamaBarang')
+                ->label('Nama Barang')
+                ->required(),
             ]);
     }
 
@@ -57,17 +59,20 @@ class ProduksiResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('KodeProduksi')
-                    ->searchable()
-                    ->sortable(),
+            Tables\Columns\TextColumn::make('KodeProduksi')
+                ->label('Kode Produksi')
+                ->searchable()
+                ->sortable(),
 
-                Tables\Columns\TextColumn::make('KodeBarang')
-                    ->searchable()
-                    ->sortable(),
+            Tables\Columns\TextColumn::make('KodeBarang')
+                ->label('Kode Barang')
+                ->searchable()
+                ->sortable(),
 
-                Tables\Columns\TextColumn::make('NamaBarang')
-                    ->searchable()
-                    ->sortable(),
+            Tables\Columns\TextColumn::make('NamaBarang')
+                ->label('Nama Barang')
+                ->searchable()
+                ->sortable(),
             ])
             ->filters([
                 //

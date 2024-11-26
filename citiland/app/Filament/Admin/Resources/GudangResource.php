@@ -40,6 +40,11 @@ class GudangResource extends Resource
                     ->label('Kode Gudang')
                     ->required(),
 
+                Forms\Components\TextInput::make('lastPrimaryId')
+                    ->label('Last Primary ID')
+                    ->default(Gudang::getLastPrimaryId())
+                    ->disabled(),
+
                 Forms\Components\TextInput::make('nama_Gudang')
                     ->label('Nama Gudang')
                     ->required(),

@@ -12,7 +12,10 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Notifications\Notification;
+use Livewire\Attributes\Reactive;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\Supplier;
+use App\Models\Jenis;
 
 class PembelianResource extends Resource
 {
@@ -36,40 +39,61 @@ class PembelianResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('KodePembelian')
-                    ->label('Kode Pembelian')
-                    ->required()
-                    ->placeholder('Kode Pembelian'),
+            Forms\Components\TextInput::make('KodePembelian')
+                ->label('Kode Pembelian')
+                ->required(),
+                
+            Forms\Components\TextInput::make('lastPrimaryId')
+                ->label('Last Primary ID')
+                ->default(Pembelian::getLastPrimaryId())
+                ->disabled(),
 
-                Forms\Components\TextInput::make('KodeJenisBahanBaku')
-                    ->label('Kode Jenis Bahan Baku')
-                    ->required()
-                    ->placeholder('Kode Jenis Bahan Baku'),
+            Forms\Components\Select::make('KodeJenisBahanBaku')
+                ->label('Jenis Bahan Baku')
+                ->options(function () {
+                    return Jenis::all()->pluck('full_label', 'KodeJenisBahanBaku');
+                })
+                ->reactive()
+                ->searchable()
+                ->required(),
+            
+            Forms\Components\TextInput::make('current_stock')
+                ->label('Current Stock')
+                ->disabled()
+                ->reactive()
+                ->afterStateUpdated(function ($state, callable $set, $get) {
+                    $jenisId = $get('KodeJenisBahanBaku');
+            
+                    $stock = \App\Models\StokBahanBaku::where('KodeJenisBahanBaku', $jenisId)->sum('JumlahBahanBaku');
+            
+                    $set('current_stock', $stock);
+                })
+                ->dehydrateStateUsing(fn ($state) => null),
+           
 
-                Forms\Components\TextInput::make('JumlahPembelian')
-                    ->label('Jumlah Pembelian')
-                    ->required()
-                    ->placeholder('Jumlah Pembelian'),
+            Forms\Components\TextInput::make('JumlahPembelian')
+                ->label('Jumlah Pembelian')
+                ->required()
+                ->numeric(),
 
-                Forms\Components\TextInput::make('UnitBahanBaku')
-                    ->label('Unit Bahan Baku')
-                    ->required()
-                    ->placeholder('Unit Bahan Baku'),
+                Forms\Components\Select::make('kode_supplier')
+                ->label('Supplier')
+                ->options(function () {
+                    return Supplier::all()->pluck('full_label', 'kode_supplier');
+                })
+                ->searchable()
+                ->required(),
 
-                Forms\Components\TextInput::make('kode_supplier')
-                    ->label('Kode Supplier')
-                    ->required()
-                    ->placeholder('Kode Supplier'),
+            Forms\Components\TextInput::make('HargaBahanBaku')
+                ->label('Harga Bahan Baku')
+                ->required()
+                ->numeric(),
 
-                Forms\Components\TextInput::make('HargaBahanBaku')
-                    ->label('Harga Bahan Baku')
-                    ->required()
-                    ->placeholder('Harga Bahan Baku'),
+            Forms\Components\DateTimePicker::make('TanggalPembelian')
+                ->label('Tanggal Pembelian')
+                ->required(),
 
-                Forms\Components\DateTimePicker::make('TanggalPembelian')
-                    ->label('Tanggal Pembelian')
-                    ->required()
-                    ->placeholder('Tanggal Pembelian'),
+
             ]);
     }
 
@@ -77,35 +101,37 @@ class PembelianResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('KodePembelian')
-                    ->label('Kode Pembelian')
-                    ->searchable()
-                    ->sortable(),
+            Tables\Columns\TextColumn::make('KodePembelian')
+                ->label('Kode Pembelian')
+                ->searchable()
+                ->sortable(),
 
-                Tables\Columns\TextColumn::make('KodeJenisBahanBaku')
-                    ->label('Kode Jenis Bahan Baku')
-                    ->searchable()
-                    ->sortable(),
+            Tables\Columns\TextColumn::make('KodeJenisBahanBaku')
+                ->label('Jenis Bahan Baku')
+                ->searchable()
+                ->sortable(),
 
-                Tables\Columns\TextColumn::make('JumlahPembelian')
-                    ->label('Jumlah Pembelian')
-                    ->sortable(),
+            Tables\Columns\TextColumn::make('JumlahPembelian')
+                ->label('Jumlah Pembelian')
+                ->numeric()
+                ->searchable()
+                ->sortable(),
 
-                Tables\Columns\TextColumn::make('UnitBahanBaku')
-                    ->label('Unit Bahan Baku'),
+            Tables\Columns\TextColumn::make('kode_supplier')
+                ->label('Supplier')
+                ->searchable()
+                ->sortable(),
 
-                Tables\Columns\TextColumn::make('kode_supplier')
-                    ->label('Kode Supplier')
-                    ->searchable()
-                    ->sortable(),
+            Tables\Columns\TextColumn::make('HargaBahanBaku')
+                ->label('Harga Pembelian')
+                ->money('IDR', true)
+                ->sortable(),
 
-                Tables\Columns\TextColumn::make('HargaBahanBaku')
-                    ->label('Harga Bahan Baku')
-                    ->sortable(),
-
-                Tables\Columns\TextColumn::make('TanggalPembelian')
-                    ->label('Tanggal Pembelian')
-                    ->sortable(),
+            Tables\Columns\TextColumn::make('TanggalPembelian')
+                ->label('Tanggal Pembelian')
+                ->dateTime()
+                ->searchable()
+                ->sortable(),
             ])
             ->filters([
                 //

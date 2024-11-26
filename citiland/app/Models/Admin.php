@@ -20,6 +20,11 @@ class Admin extends Model
     protected $primaryKey = 'kodeAdmin';
 
     public $incrementing = false;
+    public static function getLastPrimaryId()
+{
+    $lastRecord = self::orderBy('kodeAdmin', 'desc')->first();
+    return $lastRecord ? $lastRecord->kodeAdmin : 'No records found';
+}
 
 
 }

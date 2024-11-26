@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('jenis', function (Blueprint $table) {
             $table->char('KodeJenisBahanBaku', 10)->primary();
-            $table->char('JenisBahanBaku', 50);
-
-            // ID, ID SIAPAA???
+            $table->string('JenisBahanBaku', 50);
+            $table->string('UnitBahanBaku', 10);
             $table->timestamps();
         });
     }

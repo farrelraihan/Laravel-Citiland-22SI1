@@ -39,6 +39,11 @@ class SupplierResource extends Resource
                 Forms\Components\TextInput::make('kode_supplier')
                     ->label('Kode Supplier')
                     ->required(),
+                
+                Forms\Components\TextInput::make('lastPrimaryId')
+                    ->label('Last Primary ID')
+                    ->default(Supplier::getLastPrimaryId())
+                    ->disabled(),
 
                 Forms\Components\TextInput::make('nama_supplier')
                     ->label('Nama Supplier')

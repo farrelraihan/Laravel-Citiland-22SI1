@@ -17,4 +17,15 @@ class Supplier extends Model
 
     protected $primaryKey = 'kode_supplier';
     public $incrementing = false;
+    public static function getLastPrimaryId()
+{
+    $lastRecord = self::orderBy('kode_supplier', 'desc')->first();
+    return $lastRecord ? $lastRecord->kode_supplier : 'No records found';
 }
+
+public function getFullLabelAttribute()
+{
+    return "{$this->kode_supplier} - {$this->nama_supplier}";
+}
+}
+

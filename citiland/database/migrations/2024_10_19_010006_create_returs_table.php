@@ -12,15 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('returs', function (Blueprint $table) {
-            $table->char('KodeRetur', length: 10)->primary();
-            $table->char('KodeJenisBahanBaku', length: 10);
+            $table->char('KodeRetur', 10)->primary();
+            $table->char('KodeJenisBahanBaku', 10);
+            $table->char('kode_supplier', 10);
+            $table->integer('JumlahBahanBaku');
+            $table->decimal('HargaRetur', 15, 2);
+            $table->dateTime('TanggalRetur');
+            $table->timestamps();
 
-            $table->char( 'kode_supplier'); //ambil dari tabel supplier
-            $table->char('JumlahBahanBaku', length: 20);
-            $table->char( 'HargaRetur', length: 25);
-            $table->char( 'satuanBahanBaku', length: 5);
-            $table->dateTime( 'TanggalRetur');
-
+            // Foreign key relationships
             $table->foreign('KodeJenisBahanBaku')->references('KodeJenisBahanBaku')->on('jenis');
             $table->foreign('kode_supplier')->references('kode_supplier')->on('suppliers');
 

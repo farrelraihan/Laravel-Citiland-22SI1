@@ -17,4 +17,9 @@ class Produksi extends Model
 
     protected $primaryKey = 'KodeProduksi';
     public $incrementing = false;
+    public static function getLastPrimaryId()
+{
+    $lastRecord = self::orderBy('KodeProduksi', 'desc')->first();
+    return $lastRecord ? $lastRecord->KodeProduksi : 'No records found';
+}
 }

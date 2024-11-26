@@ -13,16 +13,10 @@ return new class extends Migration
     {
         Schema::create('stok_bahan_bakus', function (Blueprint $table) {
             
-            $table->char('KodebahanBaku', 10)->primary();
+            $table->char('KodeBahanBaku', 10)->primary();
             $table->char('KodeJenisBahanBaku', 10);
-            $table->char('NamaBahanBaku', 100);
-            $table->char('UnitBahanBaku', 5);
-            $table->char('JumlahBBMasuk', 10);
-            $table->char('JumlahBBKeluar', 10);
-            $table->char('Jumlah_Min', 10);
-            $table->char('HargaBahanBaku', 30);
-            $table->char('JumlahBahanBaku', 10);
-            $table->char('PemakaianRataRata', 25);
+            $table->string('NamaBahanBaku', 100);
+            $table->integer('JumlahBahanBaku')->default(0);
             $table->timestamps();
 
             $table->foreign('KodeJenisBahanBaku')->references('KodeJenisBahanBaku')->on('jenis');
