@@ -16,16 +16,10 @@ class StokImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         return new StokBahanBaku([
-            'KodebahanBaku' => $row['KodebahanBaku'],
-            'KodeJenisBahanBaku' => $row['KodeJenisBahanBaku'],
-            'NamaBahanBaku' => $row['NamaBahanBaku'],
-            'UnitBahanBaku' => $row['UnitBahanBaku'],
-            'JumlahBBMasuk' => $row['JumlahBBMasuk'],
-            'JumlahBBKeluar' => $row['JumlahBBKeluar'],
-            'Jumlah_Min' => $row['Jumlah_Min'],
-            'HargaBahanBaku' => $row['HargaBahanBaku'],
-            'JumlahBahanBaku' => $row['JumlahBahanBaku'],
-            'PemakaianRataRata' => $row['PemakaianRataRata'],
+            'KodebahanBaku' => $row['kodebahanbaku'],
+            'KodeJenisBahanBaku' => $row['kodejenisbahanbaku'],
+            'NamaBahanBaku' => $row['namabahanbaku'],
+            'JumlahBahanBaku' => $row['jumlahbahanbaku'],
         ]);
     }
 }

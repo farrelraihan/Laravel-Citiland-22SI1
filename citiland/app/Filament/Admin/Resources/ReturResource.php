@@ -50,8 +50,21 @@ class ReturResource extends Resource
                 ->options(function () {
                     return Jenis::all()->pluck('full_label', 'KodeJenisBahanBaku');
                 })
+                ->reactive()
                 ->searchable()
-                ->required(),
+                ->required()
+                ->afterStateUpdated(function ($state, callable $set) {
+                    if ($state) {
+                        $currentStock = \App\Models\StokBahanBaku::where('KodeJenisBahanBaku', $state)
+                            ->sum('JumlahBahanBaku');
+                        $set('current_stock', $currentStock);
+                    }
+            }),
+
+            Forms\Components\TextInput::make('current_stock')
+                ->label('Current Stock')
+                ->disabled()
+                ->default(0), // Set default to 0
 
             Forms\Components\Select::make('kode_supplier')
                 ->label('Supplier')

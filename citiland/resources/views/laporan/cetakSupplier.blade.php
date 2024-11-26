@@ -73,7 +73,7 @@
         <p>&copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</p>
         <p>Total Suppliers: {{ $data->count() }}</p>
         <p>Most Recent Supplier: {{ $data->sortByDesc('created_at')->first()->nama_supplier }}</p>
-        <p>Suppliers by Region: {{ $data->groupBy('alamat_supplier')->count() }} regions</p>
+
     </footer>
 </body>
 </html>

@@ -16,12 +16,11 @@ class ReturImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         return new Retur([
-            'KodeRetur' => $row['KodeRetur'],
-            'KodeJenisBahanBaku' => $row['KodeJenisBahanBaku'],
+            'KodeRetur' => $row['koderetur'],
+            'KodeJenisBahanBaku' => $row['kodejenisbahanbaku'],
             'kode_supplier' => $row['kode_supplier'],
-            'JumlahBahanBaku' => $row['JumlahBahanBaku'],
-            'HargaRetur' => $row['HargaRetur'],
-            'satuanBahanBaku' => $row['satuanBahanBaku'],
+            'JumlahBahanBaku' => $row['jumlahbahanbaku'],
+            'HargaRetur' => $row['hargaretur'],
             'TanggalRetur' => $row['TanggalRetur'],
         ]);
     }

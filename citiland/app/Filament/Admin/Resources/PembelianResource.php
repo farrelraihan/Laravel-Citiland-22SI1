@@ -55,20 +55,19 @@ class PembelianResource extends Resource
                 })
                 ->reactive()
                 ->searchable()
-                ->required(),
+                ->required()
+                ->afterStateUpdated(function ($state, callable $set) {
+                    if ($state) {
+                        $currentStock = \App\Models\StokBahanBaku::where('KodeJenisBahanBaku', $state)
+                            ->sum('JumlahBahanBaku');
+                        $set('current_stock', $currentStock);
+                    }
+            }),
             
             Forms\Components\TextInput::make('current_stock')
-                ->label('Current Stock')
-                ->disabled()
-                ->reactive()
-                ->afterStateUpdated(function ($state, callable $set, $get) {
-                    $jenisId = $get('KodeJenisBahanBaku');
-            
-                    $stock = \App\Models\StokBahanBaku::where('KodeJenisBahanBaku', $jenisId)->sum('JumlahBahanBaku');
-            
-                    $set('current_stock', $stock);
-                })
-                ->dehydrateStateUsing(fn ($state) => null),
+            ->label('Current Stock')
+            ->disabled()
+            ->default(0), // Set default to 0
            
 
             Forms\Components\TextInput::make('JumlahPembelian')

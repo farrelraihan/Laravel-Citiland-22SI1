@@ -16,11 +16,10 @@ class PemakaianImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         return new Pemakaian([
-            'KodePemakaian' => $row['KodePemakaian'],
-            'KodeJenisBahanBaku' => $row['KodeJenisBahanBaku'],
-            'JumlahPemakaian' => $row['JumlahPemakaian'],
-            'UnitBahanBaku' => $row['UnitBahanBaku'],
-            'TanggalPemakaian' => $row['TanggalPemakaian'],
+            'KodePemakaian' => $row['kodepemakaian'],
+            'KodeJenisBahanBaku' => $row['kodejenisbahanbaku'],
+            'JumlahPemakaian' => $row['jumlahpemakaian'],
+            'TanggalPemakaian' => $row['tanggalpemakaian'],
         ]);
     }
 }

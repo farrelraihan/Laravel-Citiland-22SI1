@@ -56,7 +56,7 @@
                 <th>Kode Supplier</th>
                 <th>Jumlah Bahan Baku</th>
                 <th>Harga Retur</th>
-                <th>Satuan Bahan Baku</th>
+
                 <th>Tanggal Retur</th>
             </tr>
         </thead>
@@ -68,7 +68,7 @@
                     <td>{{ $retur->kode_supplier }}</td>
                     <td>{{ $retur->JumlahBahanBaku }}</td>
                     <td>{{ number_format($retur->HargaRetur, 0, ',','.') }}</td>
-                    <td>{{ $retur->satuanBahanBaku }}</td>
+            
                     <td>{{ $retur->TanggalRetur }}</td>
                 </tr>
             @endforeach
@@ -79,7 +79,7 @@
         <p>&copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</p>
         <p>Total Retur: {{ $data->count() }}</p>
         <p>Total Nilai Retur: Rp {{ number_format($data->sum('HargaRetur'), 0, ',', '.') }}</p>
-        <p>Total Jumlah Retur: {{ $data->sum('JumlahBahanBaku') }}</p>
+
         <p>Rata-rata Nilai Retur: Rp {{ number_format($data->avg('HargaRetur'), 0, ',', '.') }}</p>
         <p>Retur Tertinggi: Rp {{ number_format($data->max('HargaRetur'), 0, ',', '.') }}</p>
         <p>Retur Terendah: Rp {{ number_format($data->min('HargaRetur'), 0, ',', '.') }}</p>

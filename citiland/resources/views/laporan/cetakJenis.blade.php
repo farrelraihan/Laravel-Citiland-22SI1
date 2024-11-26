@@ -60,6 +60,7 @@
             <tr>
                 <th>Kode Jenis Bahan Baku</th>
                 <th>Jenis Bahan Baku</th>
+                <th>Unit Bahan Baku</th>
             </tr>
         </thead>
         <tbody>
@@ -67,6 +68,7 @@
                 <tr>
                     <td>{{ $jenis->KodeJenisBahanBaku }}</td>
                     <td>{{ $jenis->JenisBahanBaku }}</td>
+                    <td>{{ $jenis->UnitBahanBaku}}</td>
                 </tr>
             @endforeach
         </tbody>

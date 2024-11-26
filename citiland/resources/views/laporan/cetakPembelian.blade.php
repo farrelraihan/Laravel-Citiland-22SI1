@@ -61,7 +61,7 @@
                 <th>Kode Pembelian</th>
                 <th>Kode Jenis Bahan Baku</th>
                 <th>Jumlah Pembelian</th>
-                <th>Unit Bahan Baku</th>
+
                 <th>Kode Supplier</th>
                 <th>Harga Bahan Baku</th>
                 <th>Tanggal Pembelian</th>
@@ -73,7 +73,7 @@
                 <td>{{ $pembelian->KodePembelian }}</td>
                 <td>{{ $pembelian->KodeJenisBahanBaku }}</td>
                 <td>{{ $pembelian->JumlahPembelian }}</td>
-                <td>{{ $pembelian->UnitBahanBaku }}</td>
+
                 <td>{{ $pembelian->kode_supplier }}</td>
                 <td>{{ number_format($pembelian->HargaBahanBaku, 0, ',', '.') }}</td>
                 <td>{{ $pembelian->TanggalPembelian }}</td>

@@ -16,10 +16,10 @@ class GudangImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         return new Gudang([
-            'kodeGudang' => $row['kodeGudang'],
-            'nama_Gudang' => $row['nama_Gudang'],
-            'noHP_Gudang' => $row['noHP_gudang'],
-            'email_Gudang' => $row['email_Gudang'],
+            'kodeGudang' => $row['kodegudang'],
+            'nama_Gudang' => $row['nama_gudang'],
+            'noHP_Gudang' => $row['nohp_gudang'],
+            'email_Gudang' => $row['email_gudang'],
         ]);
     }
 }

@@ -61,7 +61,7 @@
                 <th>Kode Pemakaian</th>
                 <th>Kode Jenis Bahan Baku</th>
                 <th>Jumlah Pemakaian</th>
-                <th>Unit Bahan Baku</th>
+          
                 <th>Tanggal Pemakaian</th>
             </tr>
         </thead>
@@ -71,7 +71,7 @@
                     <td>{{ $pemakaian->KodePemakaian }}</td>
                     <td>{{ $pemakaian->KodeJenisBahanBaku }}</td>
                     <td>{{ $pemakaian->JumlahPemakaian }}</td>
-                    <td>{{ $pemakaian->UnitBahanBaku }}</td>
+      
                     <td>{{ $pemakaian->TanggalPemakaian }}</td>
                 </tr>
             @endforeach

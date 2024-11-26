@@ -61,13 +61,8 @@
                 <th>Kode Bahan Baku</th>
                 <th>Kode Jenis Bahan Baku</th>
                 <th>Nama Bahan Baku</th>
-                <th>Unit Bahan Baku</th>
-                <th>Jlh BB Masuk</th>
-                <th>Jlh BB Keluar</th>
-                <th>Jumlah Min</th>
-                <th>Harga Bahan Baku</th>
                 <th>Jumlah Bahan Baku</th>
-                <th>Pemakaian Rata-Rata</th>
+
             </tr>
         </thead>
         <tbody>
@@ -76,13 +71,8 @@
                     <td>{{ $stok->KodebahanBaku }}</td>
                     <td>{{ $stok->KodeJenisBahanBaku }}</td>
                     <td>{{ $stok->NamaBahanBaku }}</td>
-                    <td>{{ $stok->UnitBahanBaku }}</td>
-                    <td>{{ $stok->JumlahBBMasuk }}</td>
-                    <td>{{ $stok->JumlahBBKeluar }}</td>
-                    <td>{{ $stok->Jumlah_Min }}</td>
-                    <td>{{ number_format ($stok->HargaBahanBaku, 0, ',', '.') }}</td>
                     <td>{{ $stok->JumlahBahanBaku }}</td>
-                    <td>{{ $stok->PemakaianRataRata }}</td>
+   
                 </tr>
             @endforeach
         </tbody>
@@ -93,9 +83,7 @@
         <p>Total Jenis Bahan Baku: {{ $data->count() }}</p>
         <p>Total Stok: {{ $data->sum('JumlahBahanBaku') }}</p>
         <p>Total Nilai Stok: Rp {{ number_format($data->sum('HargaBahanBaku'), 0, ',', '.') }}</p>
-        <p>Stok Di Bawah Minimum: {{ $data->where('JumlahBahanBaku', '<', 'Jumlah_Min')->count() }}</p>
-        <p>Total BB Masuk: {{ $data->sum('JumlahBBMasuk') }}</p>
-        <p>Total BB Keluar: {{ $data->sum('JumlahBBKeluar') }}</p>
+
     </footer>
 </body>
 </html>

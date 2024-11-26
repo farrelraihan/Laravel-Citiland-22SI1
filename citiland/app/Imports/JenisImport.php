@@ -18,6 +18,7 @@ class JenisImport implements ToModel, WithHeadingRow
         return new Jenis([
             'KodeJenisBahanBaku' => $row['kodejenisbahanbaku'],
             'JenisBahanBaku' => $row['jenisbahanbaku'],
+            'UnitBahanBaku' => $row['unitbahanbaku'],
         ]);
     }
 }

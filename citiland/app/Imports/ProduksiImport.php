@@ -16,9 +16,9 @@ class ProduksiImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         return new Produksi([
-            'KodeProduksi' => $row['KodeProduksi'],
-            'KodeBarang' => $row['KodeBarang'],
-            'NamaBarang' => $row['NamaBarang'],
+            'KodeProduksi' => $row['kodeproduksi'],
+            'KodeBarang' => $row['kodebarang'],
+            'NamaBarang' => $row['namabarang'],
         ]);
     }
 }

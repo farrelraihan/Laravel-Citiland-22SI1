@@ -16,13 +16,12 @@ class PembelianImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         return new Pembelian([
-            'KodePembelian' => $row['KodePembelian'],
-            'KodeJenisBahanBaku' => $row['KodeJenisBahanBaku'],
-            'JumlahPembelian' => $row['JumlahPembelian'],
-            'UnitBahanBaku' => $row['UnitBahanBaku'],
+            'KodePembelian' => $row['kodepembelian'],
+            'KodeJenisBahanBaku' => $row['kodejenisbahanbaku'],
+            'JumlahPembelian' => $row['jumlahpembelian'],
             'kode_supplier' => $row['kode_supplier'],
-            'HargaBahanBaku' => $row['HargaBahanBaku'],
-            'TanggalPembelian' => $row['TanggalPembelian'],
+            'HargaBahanBaku' => $row['hargabahanbaku'],
+            'TanggalPembelian' => $row['tanggalpembelian'],
         ]);
     }
 }
