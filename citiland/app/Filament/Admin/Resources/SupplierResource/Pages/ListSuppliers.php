@@ -21,7 +21,12 @@ class ListSuppliers extends ListRecords
             ->requiresConfirmation()
             ->modalHeading('Cetak Laporan Supplier')
             ->modalSubheading('Apakah Anda yakin ingin mencetak laporan Supplier?'),
-         
+            
+            Actions\Action::make('cetak_supplierPerformance')
+            ->label('Analisis Performa Supplier')
+            ->icon('heroicon-o-chart-bar')
+            ->action(fn() => static::cetakPerformanceAnalysis())
+            ->requiresConfirmation()
 
 
         ];
@@ -37,9 +42,43 @@ class ListSuppliers extends ListRecords
         return response()->streamDownload(fn() => print($pdf->output()), 'laporan-supplier.pdf');
     }
 
+    public static function cetakPerformanceAnalysis()
+{
+    $data = \DB::table('suppliers')
+        ->select(
+            'suppliers.kode_supplier',
+            'suppliers.nama_supplier',
+            \DB::raw('(SELECT COUNT(DISTINCT KodePembelian) FROM pembelians WHERE pembelians.kode_supplier = suppliers.kode_supplier) as purchase_count'),
+            \DB::raw('(SELECT COALESCE(SUM(JumlahPembelian), 0) FROM pembelians WHERE pembelians.kode_supplier = suppliers.kode_supplier) as total_purchases'),
+            \DB::raw('(SELECT COALESCE(SUM(HargaBahanBaku * JumlahPembelian), 0) FROM pembelians WHERE pembelians.kode_supplier = suppliers.kode_supplier) as total_purchase_value'),
+            \DB::raw('(SELECT COUNT(DISTINCT KodeRetur) FROM returs WHERE returs.kode_supplier = suppliers.kode_supplier) as return_count'),
+            \DB::raw('(SELECT COALESCE(SUM(JumlahBahanBaku), 0) FROM returs WHERE returs.kode_supplier = suppliers.kode_supplier) as total_returns'),
+            \DB::raw('(SELECT COALESCE(SUM(HargaRetur * JumlahBahanBaku), 0) FROM returs WHERE returs.kode_supplier = suppliers.kode_supplier) as total_return_value')
+        )
+        ->get()
+        ->map(function($supplier) {
+            return [
+                'kode_supplier' => $supplier->kode_supplier,
+                'nama_supplier' => $supplier->nama_supplier,
+                'purchase_count' => $supplier->purchase_count,
+                'total_purchases' => $supplier->total_purchases ?? 0,
+                'total_purchase_value' => $supplier->total_purchase_value ?? 0,
+                'return_count' => $supplier->return_count ?? 0,
+                'total_returns' => $supplier->total_returns ?? 0,
+                'total_return_value' => $supplier->total_return_value ?? 0,
+                'return_rate' => $supplier->total_purchases > 0 ? 
+                    ($supplier->total_returns / $supplier->total_purchases) * 100 : 0,
+                'financial_impact' => $supplier->total_purchase_value > 0 ?
+                    ($supplier->total_return_value / $supplier->total_purchase_value) * 100 : 0
+            ];
+        });
 
-
-
+        $pdf = \PDF::loadView('laporan.cetakSupplierPerformance', [
+            'data' => $data
+        ])->setPaper('a4', 'landscape');
+    
+        return response()->streamDownload(fn() => print($pdf->output()), 'analisis-performa-supplier.pdf');
+}
 
 
 }

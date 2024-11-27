@@ -25,21 +25,6 @@ class Retur extends Model
 
     protected static function booted()
     {
-        static::creating(function ($retur) {
-            // Validate that JumlahBahanBaku is positive
-            if ($retur->JumlahBahanBaku <= 0) {
-                throw new \Exception('JumlahBahanBaku must be greater than zero.');
-            }
-
-            // Check stock availability
-            $stok = \DB::table('stok_bahan_bakus')
-                ->where('KodeJenisBahanBaku', $retur->KodeJenisBahanBaku)
-                ->first();
-
-            if (!$stok || $stok->JumlahBahanBaku < $retur->JumlahBahanBaku) {
-                throw new \Exception('Insufficient stock for this return.');
-            }
-        });
 
         static::created(function ($retur) {
             \DB::table('stok_bahan_bakus')
