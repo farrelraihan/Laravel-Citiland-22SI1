@@ -91,7 +91,7 @@
                     <td>{{ $trend['month'] }}</td>
                     <td>{{ number_format($trend['total_returns']) }}</td>
                     <td>{{ number_format($trend['total_purchases']) }}</td>
-                    <td>Rp {{ number_format($trend['total_value']) }}</td>
+                    <td>Rp {{ number_format($trend['total_return_value']) }}</td>
                     <td>{{ number_format($trend['return_rate'], 2) }}%</td>
                 </tr>
                 @endforeach

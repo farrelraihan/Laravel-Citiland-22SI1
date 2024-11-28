@@ -82,8 +82,9 @@
                     <th>Nama Supplier</th>
                     <th>Total Transaksi</th>
                     <th>Total Pembelian</th>
-                    <th>Total Nilai (Rp)</th>
+                    <th>Total Nilai Pembelian (Rp)</th>
                     <th>Total Retur</th>
+                    <th>Total Nilai Retur (Rp)</th>
                     <th>Rate Retur (%)</th>
                     <th>Dampak Finansial (%)</th>
                     <th>Status</th>
@@ -98,6 +99,7 @@
                     <td>{{ number_format($supplier['total_purchases']) }}</td>
                     <td>{{ number_format($supplier['total_purchase_value']) }}</td>
                     <td>{{ number_format($supplier['total_returns']) }}</td>
+                    <td>{{ number_format($supplier['total_return_value']) }}</td>
                     <td>{{ number_format($supplier['return_rate'], 2) }}</td>
                     <td>{{ number_format($supplier['financial_impact'], 2) }}</td>
                     <td>

@@ -47,41 +47,48 @@ class ListReturs extends ListRecords
 
     public static function cetakReturnAnalysis()
     {
-        $data = \DB::table('returs')
-        ->join('suppliers', 'returs.kode_supplier', '=', 'suppliers.kode_supplier')
-        ->join('jenis', 'returs.KodeJenisBahanBaku', '=', 'jenis.KodeJenisBahanBaku')
-        ->leftJoin('pembelians', function($join) {
-            $join->on('returs.KodeJenisBahanBaku', '=', 'pembelians.KodeJenisBahanBaku')
-                 ->on('returs.kode_supplier', '=', 'pembelians.kode_supplier');
-        })
+    $purchases = \DB::table('pembelians')
         ->select(
-            'suppliers.nama_supplier',
-            'jenis.JenisBahanBaku',
-            'returs.KodeJenisBahanBaku',
-            \DB::raw('SUM(returs.JumlahBahanBaku) as total_returned'),
-            \DB::raw('SUM(returs.HargaRetur * returs.JumlahBahanBaku) as total_return_value'),
-            \DB::raw('SUM(pembelians.JumlahPembelian) as total_purchases'),
-            \DB::raw('DATE_FORMAT(returs.TanggalRetur, "%Y-%m") as return_month')
+            \DB::raw('DATE_FORMAT(TanggalPembelian, "%Y-%m") as month'),
+            \DB::raw('SUM(JumlahPembelian) as total_purchases')
         )
-        ->whereBetween('returs.TanggalRetur', [now()->subMonths(12), now()])
-        ->groupBy('suppliers.nama_supplier', 'jenis.JenisBahanBaku', 'returs.KodeJenisBahanBaku', 'return_month')
-        ->orderBy('total_return_value', 'desc')
-        ->get();
+        ->whereBetween('TanggalPembelian', [now()->subMonths(12), now()])
+        ->groupBy('month')
+        ->get()
+        ->keyBy('month');
 
-    $monthlyTrends = $data->groupBy('return_month')
-        ->map(function($group) {
-            $total_purchases = $group->sum('total_purchases');
-            return [
-                'month' => $group->first()->return_month,
-                'total_returns' => $group->sum('total_returned'),
-                'total_value' => $group->sum('total_return_value'),
-                'total_purchases' => $total_purchases,
-                'return_rate' => $total_purchases > 0 ? ($group->sum('total_returned') / $total_purchases) * 100 : 0
-            ];
-        })->values();
+    // Get total returns per month
+    $returns = \DB::table('returs')
+        ->select(
+            \DB::raw('DATE_FORMAT(TanggalRetur, "%Y-%m") as month'),
+            \DB::raw('SUM(JumlahBahanBaku) as total_returns'),
+            \DB::raw('SUM(HargaRetur * JumlahBahanBaku) as total_return_value')
+        )
+        ->whereBetween('TanggalRetur', [now()->subMonths(12), now()])
+        ->groupBy('month')
+        ->get()
+        ->keyBy('month');
+
+    // Combine purchases and returns data
+    $months = collect();
+    for ($i = 0; $i < 12; $i++) {
+        $month = now()->subMonths(11 - $i)->format('Y-m');
+        $total_purchases = isset($purchases[$month]) ? $purchases[$month]->total_purchases : 0;
+        $total_returns = isset($returns[$month]) ? $returns[$month]->total_returns : 0;
+        $total_return_value = isset($returns[$month]) ? $returns[$month]->total_return_value : 0;
+        $return_rate = $total_purchases > 0 ? ($total_returns / $total_purchases) * 100 : 0;
+
+        $months->push([
+            'month' => $month,
+            'total_purchases' => $total_purchases,
+            'total_returns' => $total_returns,
+            'total_return_value' => $total_return_value,
+            'return_rate' => $return_rate
+        ]);
+    }
 
     $pdf = \PDF::loadView('laporan.cetakReturnAnalysis', [
-        'monthlyTrends' => $monthlyTrends
+        'monthlyTrends' => $months
     ])->setPaper('a4', 'landscape');
 
     return response()->streamDownload(fn() => print($pdf->output()), 'laporan-return-analysis.pdf');

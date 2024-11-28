@@ -68,7 +68,7 @@
         <tbody>
             @foreach($data as $stok)
                 <tr>
-                    <td>{{ $stok->KodebahanBaku }}</td>
+                    <td>{{ $stok->KodeBahanBaku }}</td>
                     <td>{{ $stok->KodeJenisBahanBaku }}</td>
                     <td>{{ $stok->NamaBahanBaku }}</td>
                     <td>{{ $stok->JumlahBahanBaku }}</td>
@@ -82,7 +82,7 @@
         <p>&copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</p>
         <p>Total Jenis Bahan Baku: {{ $data->count() }}</p>
         <p>Total Stok: {{ $data->sum('JumlahBahanBaku') }}</p>
-        <p>Total Nilai Stok: Rp {{ number_format($data->sum('HargaBahanBaku'), 0, ',', '.') }}</p>
+
 
     </footer>
 </body>
