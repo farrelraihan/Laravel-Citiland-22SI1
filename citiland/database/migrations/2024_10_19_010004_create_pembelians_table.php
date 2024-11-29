@@ -20,6 +20,7 @@ return new class extends Migration
             $table->dateTime('TanggalPembelian');
             $table->timestamps();
 
+
             // Foreign key relationships
             $table->foreign('KodeJenisBahanBaku')->references('KodeJenisBahanBaku')->on('jenis');
             $table->foreign('kode_supplier')->references('kode_supplier')->on('suppliers');

@@ -5,6 +5,7 @@ namespace App\Filament\Admin\Resources;
 use App\Filament\Admin\Resources\ReturResource\Pages;
 use App\Imports\ReturImport;
 use App\Models\Retur;
+use App\Models\Pembelian;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Components\FileUpload;
@@ -45,39 +46,42 @@ class ReturResource extends Resource
                 ->default(Retur::getLastPrimaryId())
                 ->disabled(),
 
-            Forms\Components\Select::make('KodeJenisBahanBaku')
-                ->label('Jenis Bahan Baku')
-                ->options(function () {
-                    return Jenis::all()->pluck('full_label', 'KodeJenisBahanBaku');
-                })
+            Forms\Components\Select::make('KodePembelian')
+                ->label('Kode Pembelian')
+                ->options(Pembelian::pluck('KodePembelian', 'KodePembelian'))
                 ->reactive()
                 ->searchable()
                 ->required()
                 ->afterStateUpdated(function ($state, callable $set) {
-                    if ($state) {
-                        $currentStock = \App\Models\StokBahanBaku::where('KodeJenisBahanBaku', $state)
+                    $pembelian = Pembelian::find($state);
+                    if ($pembelian) {
+                        $currentStock = \App\Models\StokBahanBaku::where('KodeJenisBahanBaku', $pembelian->KodeJenisBahanBaku)
                             ->sum('JumlahBahanBaku');
                         $set('current_stock', $currentStock);
+                        $set('JumlahBahanBaku', $pembelian->JumlahPembelian);
+                        $set('HargaRetur', $pembelian->HargaBahanBaku);
+                        
+                        $set('supplier_name', $pembelian->supplier->nama_supplier ?? '');
+                        $set('jenis_bahan_baku_name', $pembelian->jenisBahanBaku->JenisBahanBaku ?? '');
                     }
-            }),
+                }),
+
+            Forms\Components\TextInput::make('supplier_name')
+                ->label('Supplier Name')
+                ->disabled(),
+
+            
+            Forms\Components\TextInput::make('JumlahBahanBaku')
+                ->label('Jumlah Bahan Baku')
+                ->numeric()
+                ->required(),
+
 
             Forms\Components\TextInput::make('current_stock')
                 ->label('Current Stock')
                 ->disabled()
                 ->default(0), // Set default to 0
 
-            Forms\Components\Select::make('kode_supplier')
-                ->label('Supplier')
-                ->options(function () {
-                    return Supplier::all()->pluck('full_label', 'kode_supplier');
-                })
-                ->searchable()
-                ->required(),
-
-            Forms\Components\TextInput::make('JumlahBahanBaku')
-                ->label('Jumlah Bahan Baku')
-                ->numeric()
-                ->required(),
 
             Forms\Components\TextInput::make('HargaRetur')
                 ->label('Harga Retur')
@@ -99,13 +103,19 @@ class ReturResource extends Resource
                 ->searchable()
                 ->sortable(),
 
-            Tables\Columns\TextColumn::make('KodeJenisBahanBaku')
-                ->label('Kode Jenis Bahan Baku')
+            Tables\Columns\TextColumn::make('KodePembelian')
+                ->label('Kode Pembelian')
                 ->searchable()
                 ->sortable(),
-
-            Tables\Columns\TextColumn::make('kode_supplier')
-                ->label('Kode Supplier')
+            
+            
+            Tables\Columns\TextColumn::make('pembelian.jenis.JenisBahanBaku') // Change to pembelian.jenisBahanBaku.JenisBahanBaku
+                ->label('Jenis Bahan Baku')
+                ->searchable()
+                ->sortable(),
+            
+            Tables\Columns\TextColumn::make('pembelian.supplier.nama_supplier') // Change to pembelian.supplier.nama_supplier
+                ->label('Supplier')
                 ->searchable()
                 ->sortable(),
 

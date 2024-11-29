@@ -105,7 +105,7 @@ class PembelianResource extends Resource
                 ->searchable()
                 ->sortable(),
 
-            Tables\Columns\TextColumn::make('KodeJenisBahanBaku')
+            Tables\Columns\TextColumn::make('jenis.JenisBahanBaku')
                 ->label('Jenis Bahan Baku')
                 ->searchable()
                 ->sortable(),
@@ -116,7 +116,7 @@ class PembelianResource extends Resource
                 ->searchable()
                 ->sortable(),
 
-            Tables\Columns\TextColumn::make('kode_supplier')
+            Tables\Columns\TextColumn::make('supplier.nama_supplier')
                 ->label('Supplier')
                 ->searchable()
                 ->sortable(),

@@ -13,28 +13,35 @@ class Retur extends Model
     public $timestamps = false;
     protected $fillable = [
         'KodeRetur',
-        'KodeJenisBahanBaku',
-        'kode_supplier',
+        'KodePembelian',
         'JumlahBahanBaku',
         'HargaRetur',
         'TanggalRetur',
-    ];  
+    ];
 
     protected $primaryKey = 'KodeRetur';
     public $incrementing = false;
 
     protected static function booted()
     {
-
         static::created(function ($retur) {
-            \DB::table('stok_bahan_bakus')
-                ->where('KodeJenisBahanBaku', $retur->KodeJenisBahanBaku)
-                ->decrement('JumlahBahanBaku', $retur->JumlahBahanBaku);
+            $pembelian = $retur->pembelian;
+            if ($pembelian) {
+                \DB::table('stok_bahan_bakus')
+                    ->where('KodeJenisBahanBaku', $pembelian->KodeJenisBahanBaku)
+                    ->decrement('JumlahBahanBaku', $retur->JumlahBahanBaku);
+            }
         });
     }
+
     public function jenis()
     {
         return $this->belongsTo(Jenis::class, 'KodeJenisBahanBaku', 'KodeJenisBahanBaku');
+    }
+
+    public function pembelian()
+    {
+        return $this->belongsTo(Pembelian::class, 'KodePembelian', 'KodePembelian');
     }
 
     public function supplier()

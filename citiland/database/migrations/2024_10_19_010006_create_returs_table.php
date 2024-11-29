@@ -13,16 +13,16 @@ return new class extends Migration
     {
         Schema::create('returs', function (Blueprint $table) {
             $table->char('KodeRetur', 10)->primary();
-            $table->char('KodeJenisBahanBaku', 10);
-            $table->char('kode_supplier', 10);
+            $table->char('KodePembelian', 10);
             $table->integer('JumlahBahanBaku');
             $table->decimal('HargaRetur', 15, 2);
             $table->dateTime('TanggalRetur');
             $table->timestamps();
-
-            // Foreign key relationships
-            $table->foreign('KodeJenisBahanBaku')->references('KodeJenisBahanBaku')->on('jenis');
-            $table->foreign('kode_supplier')->references('kode_supplier')->on('suppliers');
+    
+            // Foreign key relationship
+            $table->foreign('KodePembelian')
+                ->references('KodePembelian')
+                ->on('pembelians');
 
 
             

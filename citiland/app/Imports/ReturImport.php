@@ -17,8 +17,7 @@ class ReturImport implements ToModel, WithHeadingRow
     {
         return new Retur([
             'KodeRetur' => $row['koderetur'],
-            'KodeJenisBahanBaku' => $row['kodejenisbahanbaku'],
-            'kode_supplier' => $row['kode_supplier'],
+            'KodePembelian' => $row['kodepembelian'],
             'JumlahBahanBaku' => $row['jumlahbahanbaku'],
             'HargaRetur' => $row['hargaretur'],
             'TanggalRetur' => $row['TanggalRetur'],
