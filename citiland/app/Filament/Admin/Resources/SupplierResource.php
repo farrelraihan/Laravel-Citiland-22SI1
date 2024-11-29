@@ -20,7 +20,7 @@ class SupplierResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-truck';
 
-    protected static ?string $navigationGroup = 'Admin Management';
+    protected static ?string $navigationGroup = 'Pengelolaan Admin';
 
     public static function getModelLabel(): string
     {

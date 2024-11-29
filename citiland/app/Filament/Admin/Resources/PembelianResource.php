@@ -23,7 +23,7 @@ class PembelianResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
 
-    protected static ?string $navigationGroup = 'Transaction Management';
+    protected static ?string $navigationGroup = 'Pengelolaan Transaksi';
 
     public static function getModelLabel(): string
     {

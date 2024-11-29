@@ -20,7 +20,7 @@ class ReturResource extends Resource
 {
     protected static ?string $model = Retur::class;
     protected static ?string $navigationIcon = 'heroicon-o-arrow-path';
-    protected static ?string $navigationGroup = 'Transaction Management';
+    protected static ?string $navigationGroup = 'Pengelolaan Transaksi';
 
     public static function getModelLabel(): string
     {

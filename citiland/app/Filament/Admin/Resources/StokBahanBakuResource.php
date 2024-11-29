@@ -20,7 +20,7 @@ class StokBahanBakuResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-cube';
 
-    protected static ?string $navigationGroup = 'Inventory Management';
+    protected static ?string $navigationGroup = 'Pengelolaan Inventaris';
 
     public static function getModelLabel(): string
     {

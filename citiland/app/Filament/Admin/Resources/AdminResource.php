@@ -21,7 +21,7 @@ class AdminResource extends Resource
 {
     protected static ?string $model = Admin::class;
     protected static ?string $navigationIcon = 'heroicon-o-users';
-    protected static ?string $navigationGroup = 'Admin Management';
+    protected static ?string $navigationGroup = 'Pengelolaan Admin';
 
     public static function getModelLabel(): string
     {

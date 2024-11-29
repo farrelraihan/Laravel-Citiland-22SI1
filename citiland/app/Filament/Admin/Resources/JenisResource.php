@@ -20,7 +20,7 @@ class JenisResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-tag';
 
-    protected static ?string $navigationGroup = 'Inventory Management';
+    protected static ?string $navigationGroup = 'Pengelolaan Inventaris';
 
     public static function form(Form $form): Form
     {

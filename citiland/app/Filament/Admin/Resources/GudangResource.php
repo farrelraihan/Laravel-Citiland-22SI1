@@ -20,7 +20,7 @@ class GudangResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
 
-    protected static ?string $navigationGroup = 'Admin Management';
+    protected static ?string $navigationGroup = 'Pengelolaan Admin';
 
     public static function getModelLabel(): string
     {
