@@ -4,85 +4,111 @@ namespace App\Filament\Admin\Widgets;
 
 use Illuminate\Support\Facades\DB;
 use Filament\Widgets\ChartWidget;
+use Illuminate\Support\Js;
 
 class HighestUsageItemsChart extends ChartWidget
 {
-    protected static ?string $heading = 'Highest Usage Items Each Month';
+    protected static ?string $heading = 'Tren Bulanan Penggunaan Item';
 
     protected function getData(): array
     {
-        // Mengambil data pemakaian tertinggi setiap bulan dari database
+        // Get all months for the current year
+        $months = [];
+        $monthLabels = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $monthNum = str_pad($i, 2, '0', STR_PAD_LEFT);
+            $monthKey = date('Y') . '-' . $monthNum;
+            $months[$monthKey] = [
+                'total_usage' => 0,
+                'most_used_item' => 'No data',
+                'usage' => 0,
+            ];
+            $monthLabels[] = $monthKey;
+        }
+
+        // Fetch usage data
         $data = DB::table('pemakaians')
             ->join('jenis', 'pemakaians.KodeJenisBahanBaku', '=', 'jenis.KodeJenisBahanBaku')
             ->select(
                 DB::raw('DATE_FORMAT(TanggalPemakaian, "%Y-%m") as month'),
-                'pemakaians.KodeJenisBahanBaku',
                 'jenis.JenisBahanBaku',
-                DB::raw('MAX(JumlahPemakaian) as max_usage')
+                DB::raw('SUM(JumlahPemakaian) as total_usage')
             )
-            ->groupBy('month', 'pemakaians.KodeJenisBahanBaku', 'jenis.JenisBahanBaku')
+            ->whereYear('TanggalPemakaian', date('Y'))
+            ->groupBy('month', 'jenis.JenisBahanBaku')
             ->orderBy('month', 'asc')
             ->get();
 
-        // Variabel untuk menyusun data grafik
-        $months = [];
-        $items = [];
-        $itemNames = [];
-        $usages = [];
-
+        // Process the data
         foreach ($data as $row) {
-            $months[] = $row->month;
-            $items[] = $row->KodeJenisBahanBaku;
-            $itemNames[] = $row->JenisBahanBaku;
-            $usages[] = $row->max_usage;
+            if (isset($months[$row->month])) {
+                $months[$row->month]['total_usage'] += $row->total_usage;
+
+                if ($row->total_usage > $months[$row->month]['usage']) {
+                    $months[$row->month]['usage'] = $row->total_usage;
+                    $months[$row->month]['most_used_item'] = $row->JenisBahanBaku;
+                }
+            }
         }
 
-        // Mengembalikan data dalam format yang dapat diterima Chart.js
+        // Prepare data for the chart
+        $totalUsages = [];
+        $tooltips = [];
+        foreach ($months as $monthData) {
+            $totalUsages[] = $monthData['total_usage'];
+            if ($monthData['most_used_item'] !== 'No data') {
+                $tooltips[] = 'Most used item: ' . $monthData['most_used_item'] . ' (' . $monthData['usage'] . ')';
+            } else {
+                $tooltips[] = 'No data';
+            }
+        }
+
         return [
-        'datasets' => [
+            'datasets' => [
                 [
-                    'label' => 'Jumlah Pemakaian Tertinggi',
-                    'data' => $usages,
-                    'backgroundColor' => 'rgba(255, 99, 132, 0.2)',
-                    'borderColor' => 'rgba(255, 99, 132, 1)',
-                    'borderWidth' => 1,
+                    'label' => 'Total Item Usage',
+                    'data' => $totalUsages,
+                    'backgroundColor' => 'rgba(75, 192, 192, 0.4)',
+                    'borderColor' => 'rgba(75, 192, 192, 1)',
+                    'borderWidth' => 2,
+                    'tension' => 0.3,
+                    'fill' => false,
                 ],
             ],
-            'labels' => $months,
+            'labels' => $monthLabels,
             'options' => [
                 'plugins' => [
-                    'legend' => [
-                        'display' => true,
-                    ],
                     'tooltip' => [
-                        'enabled' => true,
-                        'mode' => 'index',
-                        'intersect' => false,
                         'callbacks' => [
-                            'label' => "function(context) {
-                                return itemNames[context.dataIndex] + ': ' + context.formattedValue;
-                            }"
-                        ]
-                    ]
+                            'label' => Js::from("
+                                function(context) {
+                                    var tooltips = " . json_encode($tooltips) . ";
+                                    var index = context.dataIndex;
+                                    return tooltips[index];
+                                }
+                            "),
+                        ],
+                    ],
                 ],
                 'scales' => [
                     'y' => [
                         'beginAtZero' => true,
                         'title' => [
                             'display' => true,
-                            'text' => 'Jumlah Pemakaian'
-                        ]
+                            'text' => 'Total Usage',
+                        ],
                     ],
                     'x' => [
                         'title' => [
                             'display' => true,
-                            'text' => 'Bulan'
-                        ]
-                    ]
+                            'text' => 'Month',
+                        ],
+                    ],
                 ],
             ],
         ];
     }
+
     protected function getType(): string
     {
         return 'line';

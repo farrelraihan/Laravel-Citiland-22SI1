@@ -10,20 +10,20 @@ use Filament\Tables\Columns\TextColumn;
 
 class LowStockAlertWidget extends BaseWidget
 {
-    protected static ?string $heading = 'Low Stock Alert';
+    protected static ?string $heading = 'Stok Menipis';
 
     protected function getTableQuery(): Builder
     {
         return StokBahanBaku::query()
-            ->select('KodebahanBaku', 'NamaBahanBaku', 'JumlahBahanBaku')
-            ->where('JumlahBahanBaku', '<', 10) // Adjust the threshold as needed
+            ->select('KodeBahanBaku', 'NamaBahanBaku', 'JumlahBahanBaku')
+            ->where('JumlahBahanBaku', '<', 100) // Adjust the threshold as needed
             ->orderBy('JumlahBahanBaku', 'asc');
     }
 
     protected function getTableColumns(): array
     {
         return [
-            TextColumn::make('KodebahanBaku')->label('Stock Code'),
+            TextColumn::make('KodeBahanBaku')->label('Stock Code'),
             TextColumn::make('NamaBahanBaku')->label('Stock Name'),
             TextColumn::make('JumlahBahanBaku')->label('Quantity'),
         ];
