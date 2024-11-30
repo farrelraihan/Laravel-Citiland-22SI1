@@ -25,4 +25,5 @@ Data import/export capabilities
 # License
 * This project is licensed under the MIT License.
 
-# CreditsBuilt for CV. Citiland Internusa using the Laravel framework and Filament admin panel.
+# Credits
+* Built for CV. Citiland Internusa using the Laravel framework and Filament admin panel.
