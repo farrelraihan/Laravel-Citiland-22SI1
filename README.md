@@ -8,7 +8,6 @@ A web-based inventory and warehouse management system built with Laravel for CV.
 * Usage/consumption tracking
 * Production management
 * Supplier management
-* Report generation
 * Excel import capabilities
 * PDF report generation for stock analysis
 * User-friendly admin interface powered by Filament
