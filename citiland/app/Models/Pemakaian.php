@@ -41,11 +41,7 @@ class Pemakaian extends Model
             }
         });
 
-        static::created(function ($pemakaian) {
-            \DB::table('stok_bahan_bakus')
-                ->where('KodeJenisBahanBaku', $pemakaian->KodeJenisBahanBaku)
-                ->decrement('JumlahBahanBaku', $pemakaian->JumlahPemakaian);
-        });
+
     }
 
     public function jenis()
