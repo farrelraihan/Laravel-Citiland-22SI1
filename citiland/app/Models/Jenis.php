@@ -13,6 +13,7 @@ class Jenis extends Model
     protected $fillable = [
         'KodeJenisBahanBaku',
         'JenisBahanBaku',
+        'UnitBahanBaku'
     ];
     public static function getLastPrimaryId()
 {

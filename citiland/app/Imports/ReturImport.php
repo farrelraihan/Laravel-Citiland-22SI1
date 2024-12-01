@@ -20,7 +20,7 @@ class ReturImport implements ToModel, WithHeadingRow
             'KodePembelian' => $row['kodepembelian'],
             'JumlahBahanBaku' => $row['jumlahbahanbaku'],
             'HargaRetur' => $row['hargaretur'],
-            'TanggalRetur' => $row['TanggalRetur'],
+            'TanggalRetur' => $row['tanggalretur'],
         ]);
     }
 }
