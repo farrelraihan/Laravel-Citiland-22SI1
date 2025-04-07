@@ -31,5 +31,4 @@ A fictional web-based inventory and warehouse management system built with Larav
 # License
 * This project is licensed under the MIT License.
 
-# Credits
-* Built for CV. Citiland Internusa using the Laravel framework and Filament admin panel.
+
