@@ -1,5 +1,5 @@
 # Citiland Management System
-A web-based inventory and warehouse management system built with Laravel for CV. Citiland Internusa.
+A fictional web-based inventory and warehouse management system built with Laravel
 
 # Features
 * Inventory tracking and management
